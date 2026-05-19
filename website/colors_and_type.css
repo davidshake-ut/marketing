@@ -1,0 +1,203 @@
+/* =====================================================================
+   FSG Design System — Colors & Type
+   ---------------------------------------------------------------------
+   Fusion Solutions Group: Fractional CTO for Systems Integrators & Electrical Contractors
+   Source: fusionsg.com, FSG Brand Voice Guide, SCALE One-Pager
+   ===================================================================== */
+
+/* ---- WEBFONTS ----
+   Sora (display/headings) and DM Sans (body) are the official FSG webfonts.
+   Loaded from Google Fonts via @import for portability; you can also
+   self-host using the files in /fonts (placeholder; see README).
+*/
+@import url('https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;1,400&display=swap');
+
+:root {
+  /* ============================================================
+     COLOR — BRAND
+     ============================================================ */
+  --fsg-brand:        #0c5394;   /* Primary blue (logo) */
+  --fsg-brand-dark:   #083d72;   /* Deep blue — gradient end, headings on light */
+  --fsg-brand-darker: #062e57;   /* Footer / very-dark surfaces */
+  --fsg-brand-light:  #e8f1fb;   /* Tint — eyebrow chips, icon plates */
+
+  --fsg-accent:       #e8840c;   /* Warm amber accent — CTA / SCALE letter blocks */
+  --fsg-accent-dark:  #c96e08;   /* Hover/press for accent */
+
+  /* ============================================================
+     COLOR — INK & TEXT
+     ============================================================ */
+  --fsg-ink:          #0b1220;   /* Primary text on light */
+  --fsg-ink-2:        #3a4459;   /* Secondary text / body emphasis */
+  --fsg-muted:        #6b7690;   /* Muted text / labels / fine print */
+  --fsg-muted-2:      rgba(11,18,32,.55);
+
+  /* ============================================================
+     COLOR — SURFACES
+     ============================================================ */
+  --fsg-white:        #ffffff;
+  --fsg-bg:           #f5f0e7;   /* Warm parchment — page bg / section bands */
+  --fsg-bg-2:         #faf6ee;   /* Slightly lighter parchment */
+  --fsg-bg-dark:      #0b1a2e;   /* Dark section (S.C.A.L.E., footer) */
+
+  /* ============================================================
+     COLOR — LINES & DIVIDERS
+     ============================================================ */
+  --fsg-line:         rgba(11,18,32,.09);
+  --fsg-line-dark:    rgba(255,255,255,.10);
+
+  /* ============================================================
+     COLOR — SEMANTIC
+     ============================================================ */
+  --fsg-success:      #1a9e5c;
+  --fsg-success-bg:   rgba(26,158,92,.12);
+  --fsg-danger:       #d14b2a;
+  --fsg-danger-bg:    rgba(209,75,42,.10);
+
+  /* ============================================================
+     TYPOGRAPHY — FAMILIES
+     ============================================================ */
+  --font-head: 'Sora', ui-sans-serif, system-ui, -apple-system, Segoe UI, sans-serif;
+  --font-body: 'DM Sans', ui-sans-serif, system-ui, -apple-system, Segoe UI, sans-serif;
+  --font-mono: ui-monospace, SFMono-Regular, Menlo, monospace;
+
+  /* ============================================================
+     TYPOGRAPHY — TYPE SCALE
+     Mobile-safe clamps mirror the live site.
+     ============================================================ */
+  --t-display:  clamp(36px, 5vw, 66px);   /* Hero H1 */
+  --t-h1:       clamp(32px, 4vw, 52px);
+  --t-h2:       clamp(26px, 3vw, 38px);
+  --t-h3:       19px;
+  --t-h4:       17px;
+  --t-body-lg:  18px;
+  --t-body:     16px;
+  --t-body-sm:  14.5px;
+  --t-caption:  13px;
+  --t-eyebrow:  11px;
+  --t-stat:     clamp(28px, 3vw, 40px);
+
+  /* ============================================================
+     SPACING — 4px BASE
+     ============================================================ */
+  --sp-1:  4px;
+  --sp-2:  8px;
+  --sp-3:  12px;
+  --sp-4:  16px;
+  --sp-5:  20px;
+  --sp-6:  24px;
+  --sp-7:  32px;
+  --sp-8:  40px;
+  --sp-9:  56px;
+  --sp-10: 72px;
+  --sp-11: 96px;
+
+  /* ============================================================
+     RADII
+     ============================================================ */
+  --radius-xs: 8px;
+  --radius-sm: 12px;
+  --radius:    14px;   /* Buttons, chips */
+  --radius-md: 16px;
+  --radius-lg: 20px;   /* Cards, panels */
+  --radius-pill: 999px;
+
+  /* ============================================================
+     SHADOWS — Cool blue-shadow stack
+     ============================================================ */
+  --shadow-sm: 0 4px 14px rgba(11,18,32,.06);
+  --shadow:    0 12px 32px rgba(11,18,32,.09);
+  --shadow-lg: 0 24px 56px rgba(11,18,32,.13);
+  --shadow-brand: 0 6px 20px rgba(12,83,148,.28);
+  --shadow-brand-lg: 0 10px 28px rgba(12,83,148,.38);
+  --shadow-accent: 0 6px 20px rgba(232,132,12,.28);
+
+  /* ============================================================
+     LAYOUT
+     ============================================================ */
+  --max-width: 1140px;
+  --pad: clamp(18px, 3vw, 32px);
+
+  /* ============================================================
+     MOTION
+     ============================================================ */
+  --ease-out:  cubic-bezier(.22, .61, .36, 1);
+  --ease-spring: cubic-bezier(.34, 1.56, .64, 1);
+  --dur-fast: .15s;
+  --dur:      .25s;
+  --dur-slow: .55s;
+}
+
+/* =====================================================================
+   SEMANTIC ELEMENT STYLES
+   ===================================================================== */
+
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: var(--font-body);
+  font-size: var(--t-body);
+  line-height: 1.65;
+  color: var(--fsg-ink);
+  background: var(--fsg-white);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+h1, h2, h3, h4, h5 {
+  font-family: var(--font-head);
+  color: var(--fsg-ink);
+  letter-spacing: -.5px;
+  line-height: 1.1;
+  margin: 0;
+  text-wrap: balance;
+}
+
+h1 { font-size: var(--t-h1);     font-weight: 800; letter-spacing: -1.5px; }
+h2 { font-size: var(--t-h2);     font-weight: 800; letter-spacing: -1.1px; }
+h3 { font-size: var(--t-h3);     font-weight: 800; letter-spacing: -.4px; }
+h4 { font-size: var(--t-h4);     font-weight: 700; letter-spacing: -.3px; }
+
+p { margin: 0; line-height: 1.65; }
+p.lead   { font-size: var(--t-body-lg); color: var(--fsg-ink-2); }
+p.muted  { color: var(--fsg-muted); }
+
+a { color: var(--fsg-brand); text-decoration: none; }
+a:hover { color: var(--fsg-brand-dark); }
+
+strong, b { font-weight: 700; color: var(--fsg-ink); }
+em { font-style: normal; color: var(--fsg-brand); } /* Brand idiom (see hero H1 on website) */
+
+/* Eyebrow label — "OUR FRAMEWORK", "REAL RESULTS", etc */
+.fsg-eyebrow {
+  font-family: var(--font-head);
+  font-size: var(--t-eyebrow);
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: .9px;
+  color: var(--fsg-brand);
+  display: inline-flex; align-items: center; gap: 8px;
+}
+.fsg-eyebrow::before {
+  content: ""; width: 18px; height: 2px; border-radius: 2px;
+  background: currentColor;
+}
+
+/* Section sub-copy */
+.fsg-sub {
+  font-size: var(--t-body);
+  line-height: 1.65;
+  color: var(--fsg-muted);
+  max-width: 58ch;
+}
+
+code, kbd, pre, samp { font-family: var(--font-mono); }
+
+/* Reduced-motion respect */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: .01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: .01ms !important;
+  }
+}
