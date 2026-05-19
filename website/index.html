@@ -217,8 +217,58 @@
     .section-head p { color: var(--fsg-muted); max-width: 58ch; }
 
     /* =========================================================
-       Wins
+       Testimonial
        ========================================================= */
+    .testimonial-section {
+      background: var(--fsg-bg-dark);
+      padding: clamp(52px, 6vw, 80px) 0;
+      position: relative; overflow: hidden;
+    }
+    .testimonial-section::before {
+      content: ""; position: absolute; top: -160px; left: -160px;
+      width: 480px; height: 480px; border-radius: 999px;
+      background: radial-gradient(circle, rgba(12,83,148,.28), transparent 65%);
+    }
+    .testimonial-section::after {
+      content: ""; position: absolute; bottom: -120px; right: -80px;
+      width: 360px; height: 360px; border-radius: 999px;
+      background: radial-gradient(circle, rgba(232,132,12,.12), transparent 65%);
+    }
+    .testimonial-inner {
+      max-width: 820px; margin: 0 auto; text-align: center;
+      position: relative; z-index: 1;
+    }
+    .quote-mark {
+      font-family: var(--font-head); font-size: 96px; font-weight: 800;
+      color: var(--fsg-accent); line-height: .6;
+      margin-bottom: 28px; display: block;
+      opacity: .7;
+    }
+    .testimonial-text {
+      font-family: var(--font-head); font-weight: 500;
+      font-size: clamp(18px, 2.2vw, 24px); line-height: 1.55;
+      color: rgba(255,255,255,.90); letter-spacing: -.2px;
+      margin: 0 0 36px;
+      text-wrap: pretty;
+    }
+    .testimonial-text em { font-style: normal; color: var(--fsg-accent); }
+    .testimonial-attr {
+      display: inline-flex; align-items: center; gap: 14px;
+      background: rgba(255,255,255,.07);
+      border: 1px solid rgba(255,255,255,.12);
+      border-radius: 999px;
+      padding: 10px 20px 10px 10px;
+    }
+    .attr-avatar {
+      width: 40px; height: 40px; border-radius: 999px; flex: 0 0 auto;
+      background: linear-gradient(135deg, var(--fsg-brand), var(--fsg-brand-dark));
+      display: grid; place-items: center;
+      font-family: var(--font-head); font-weight: 800; font-size: 15px; color: #fff;
+    }
+    .attr-text { text-align: left; }
+    .attr-name { font-family: var(--font-head); font-weight: 800; font-size: 14px; color: #fff; letter-spacing: -.2px; }
+    .attr-role { font-size: 12px; color: rgba(255,255,255,.55); margin-top: 1px; }
+
     .band-parchment { background: var(--fsg-bg); border-top: 1px solid var(--fsg-line); border-bottom: 1px solid var(--fsg-line); }
     .wins-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; }
     .win {
@@ -623,6 +673,27 @@
   </main>
 
   <!-- (Trust bar and Stat strip removed at user's request) -->
+
+  <!-- ───────── TESTIMONIAL ───────── -->
+  <section class="testimonial-section">
+    <div class="container">
+      <div class="testimonial-inner reveal">
+        <span class="quote-mark" aria-hidden="true">&ldquo;</span>
+        <p class="testimonial-text">
+          Working with David fundamentally changed how we position and deliver technology at Fox Quest. By expanding our offerings beyond a narrow scope, we're now able to design <em>complete systems</em> instead of isolated solutions.
+          <br><br>
+          That has made us more valuable to our customers, more competitive in new opportunities, and far stickier as a long-term partner. David didn't just advise, he helped us <em>execute and mature</em> into a stronger systems integrator.
+        </p>
+        <div class="testimonial-attr">
+          <div class="attr-avatar" aria-hidden="true">KF</div>
+          <div class="attr-text">
+            <div class="attr-name">Kevin Fox</div>
+            <div class="attr-role">CEO, Fox Quest, Inc.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
 
   <!-- ───────── WINS ───────── -->
   <section id="wins" class="band-parchment">
