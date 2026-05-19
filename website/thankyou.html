@@ -1,0 +1,251 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="robots" content="noindex" />
+  <title>You're all set · Fusion Solutions Group</title>
+  <link rel="stylesheet" href="colors_and_type.css">
+  <link rel="icon" type="image/png" href="assets/fsg-logo.png">
+  <link rel="apple-touch-icon" href="assets/fsg-logo.png">
+  <script src="https://unpkg.com/lucide@0.460.0/dist/umd/lucide.min.js"></script>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; }
+    body {
+      margin: 0; min-height: 100vh;
+      display: flex; flex-direction: column;
+      background:
+        radial-gradient(700px 500px at 15% 10%, rgba(12,83,148,.08), transparent 60%),
+        radial-gradient(600px 400px at 88% 80%, rgba(232,132,12,.05), transparent 60%),
+        linear-gradient(180deg, #fff 0%, var(--fsg-bg) 100%);
+      font-family: var(--font-body);
+      -webkit-font-smoothing: antialiased;
+    }
+    body::before {
+      content: ""; position: fixed; inset: 0; pointer-events: none; z-index: 0;
+      background-image: radial-gradient(rgba(12,83,148,.055) 1px, transparent 1px);
+      background-size: 28px 28px;
+      mask-image: radial-gradient(ellipse 80% 80% at 50% 40%, black 0%, transparent 100%);
+    }
+
+    /* ── NAV ── */
+    .topbar {
+      position: relative; z-index: 10;
+      padding: 18px clamp(18px, 4vw, 48px);
+      border-bottom: 1px solid var(--fsg-line);
+      backdrop-filter: blur(12px) saturate(180%);
+      background: rgba(255,255,255,.85);
+      display: flex; align-items: center; justify-content: space-between;
+    }
+    .brand { display: flex; align-items: center; gap: 10px; text-decoration: none; }
+    .brand img { width: 34px; height: 34px; }
+    .brand-name {
+      font-family: var(--font-head); font-weight: 800; font-size: 15px;
+      color: var(--fsg-ink); letter-spacing: -.3px;
+    }
+
+    /* ── MAIN ── */
+    main {
+      flex: 1; display: flex; align-items: center; justify-content: center;
+      padding: clamp(48px, 8vw, 96px) clamp(18px, 4vw, 48px);
+      position: relative; z-index: 1;
+    }
+    .card {
+      background: #fff;
+      border: 1px solid var(--fsg-line);
+      border-radius: 24px;
+      box-shadow: var(--shadow-lg);
+      padding: clamp(40px, 6vw, 72px) clamp(32px, 5vw, 64px);
+      max-width: 560px; width: 100%;
+      text-align: center;
+      position: relative; overflow: hidden;
+      animation: riseIn .65s var(--ease-out) both;
+    }
+    @keyframes riseIn {
+      from { opacity: 0; transform: translateY(28px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    .card::before {
+      content: ""; position: absolute; top: -80px; right: -80px;
+      width: 260px; height: 260px; border-radius: 999px;
+      background: radial-gradient(circle, rgba(12,83,148,.08), transparent 70%);
+      pointer-events: none;
+    }
+    .card::after {
+      content: ""; position: absolute; bottom: -80px; left: -60px;
+      width: 220px; height: 220px; border-radius: 999px;
+      background: radial-gradient(circle, rgba(232,132,12,.06), transparent 70%);
+      pointer-events: none;
+    }
+
+    /* Check badge */
+    .check-badge {
+      width: 72px; height: 72px; border-radius: 999px; margin: 0 auto 28px;
+      background: linear-gradient(135deg, var(--fsg-brand), var(--fsg-brand-dark));
+      display: grid; place-items: center;
+      box-shadow: var(--shadow-brand);
+      animation: popIn .5s .3s var(--ease-spring) both;
+      position: relative; z-index: 1;
+    }
+    @keyframes popIn {
+      from { opacity: 0; transform: scale(.5); }
+      to   { opacity: 1; transform: scale(1); }
+    }
+    .check-badge [data-lucide] { width: 34px; height: 34px; color: #fff; stroke-width: 2.5; }
+
+    /* Text */
+    .eyebrow {
+      font-family: var(--font-head); font-size: 11px; font-weight: 800;
+      text-transform: uppercase; letter-spacing: .9px;
+      color: var(--fsg-brand); margin-bottom: 14px;
+      display: flex; align-items: center; justify-content: center; gap: 8px;
+      animation: fadeUp .5s .4s both;
+    }
+    .eyebrow::before, .eyebrow::after {
+      content: ""; width: 24px; height: 2px; background: currentColor; border-radius: 2px;
+    }
+    @keyframes fadeUp { from { opacity:0; transform:translateY(12px); } to { opacity:1; transform:translateY(0); } }
+
+    h1 {
+      font-family: var(--font-head); font-weight: 800;
+      font-size: clamp(26px, 4vw, 36px); letter-spacing: -1px; line-height: 1.1;
+      color: var(--fsg-ink); margin: 0 0 12px;
+      animation: fadeUp .5s .5s both;
+    }
+    h1 em { font-style: normal; color: var(--fsg-brand); }
+
+    .sub {
+      font-size: 16px; line-height: 1.65; color: var(--fsg-ink-2);
+      margin: 0 0 32px; max-width: 42ch; margin-left: auto; margin-right: auto;
+      animation: fadeUp .5s .6s both;
+    }
+
+    /* What to expect */
+    .expects {
+      display: grid; gap: 10px; margin-bottom: 32px; text-align: left;
+      animation: fadeUp .5s .7s both;
+    }
+    .expect-row {
+      display: flex; gap: 12px; align-items: flex-start;
+      background: var(--fsg-bg); border: 1px solid var(--fsg-line);
+      border-radius: 12px; padding: 12px 14px;
+      font-size: 14px; color: var(--fsg-ink-2); line-height: 1.5;
+    }
+    .expect-row [data-lucide] { width: 18px; height: 18px; color: var(--fsg-brand); flex: 0 0 auto; margin-top: 1px; }
+    .expect-row b { color: var(--fsg-ink); font-weight: 700; }
+
+    /* CTA */
+    .cta-group {
+      display: flex; flex-direction: column; gap: 10px; align-items: center;
+      animation: fadeUp .5s .82s both;
+    }
+    .btn {
+      display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+      padding: 13px 28px; border-radius: 14px;
+      font-family: var(--font-head); font-weight: 700; font-size: 15px;
+      border: 1.5px solid transparent; cursor: pointer; text-decoration: none;
+      transition: transform .15s, box-shadow .15s;
+      width: 100%;
+    }
+    .btn:hover { transform: translateY(-2px); }
+    .btn.primary {
+      background: linear-gradient(160deg, var(--fsg-brand) 0%, var(--fsg-brand-dark) 100%);
+      color: #fff; box-shadow: var(--shadow-brand);
+    }
+    .btn.primary:hover { box-shadow: var(--shadow-brand-lg); }
+    .btn.ghost {
+      background: #fff; border-color: var(--fsg-line); color: var(--fsg-ink-2);
+      box-shadow: var(--shadow-sm);
+    }
+    .btn [data-lucide] { width: 17px; height: 17px; }
+
+    .divider {
+      height: 1px; background: var(--fsg-line); margin: 28px 0;
+      position: relative; z-index: 1;
+    }
+
+    .brand-sig {
+      font-family: var(--font-head); font-weight: 700; font-size: 13px;
+      color: var(--fsg-brand); letter-spacing: -.1px;
+      animation: fadeUp .5s .9s both;
+    }
+
+    /* ── FOOTER ── */
+    footer {
+      position: relative; z-index: 1;
+      padding: 20px clamp(18px, 4vw, 48px);
+      border-top: 1px solid var(--fsg-line);
+      background: rgba(255,255,255,.70);
+      text-align: center;
+      font-family: var(--font-head); font-size: 11.5px; color: var(--fsg-muted);
+    }
+    footer a { color: var(--fsg-brand); font-weight: 700; text-decoration: none; }
+  </style>
+</head>
+<body>
+
+  <div class="topbar">
+    <a class="brand" href="https://www.fusionsg.com" aria-label="Fusion Solutions Group home">
+      <img src="assets/fsg-logo.png" alt="">
+      <span class="brand-name">Fusion Solutions Group</span>
+    </a>
+  </div>
+
+  <main>
+    <div class="card">
+
+      <div class="check-badge" aria-hidden="true">
+        <i data-lucide="check"></i>
+      </div>
+
+      <div class="eyebrow">You're all set</div>
+
+      <h1>Thank you for reaching out.<br>We look forward to the <em>conversation</em>.</h1>
+
+      <p class="sub">
+        A confirmation is on its way to your inbox. David will be ready and prepared for your call.
+      </p>
+
+      <div class="expects">
+        <div class="expect-row">
+          <i data-lucide="clock"></i>
+          <span><b>Check your calendar invite.</b> You'll receive a confirmation with the call details and any prep notes.</span>
+        </div>
+        <div class="expect-row">
+          <i data-lucide="message-circle"></i>
+          <span><b>Come with your biggest question.</b> What's the one thing you most want clarity on? That's where we'll start.</span>
+        </div>
+        <div class="expect-row">
+          <i data-lucide="shield-check"></i>
+          <span><b>No pitch. No pressure.</b> This is a real conversation. If we're not the right fit, we'll tell you.</span>
+        </div>
+      </div>
+
+      <div class="cta-group">
+        <a class="btn primary" href="https://www.fusionsg.com">
+          <i data-lucide="arrow-left"></i>
+          Back to fusionsg.com
+        </a>
+        <a class="btn ghost" href="mailto:info@fusionsg.com">
+          <i data-lucide="mail"></i>
+          Questions? info@fusionsg.com
+        </a>
+      </div>
+
+      <div class="divider"></div>
+      <div class="brand-sig">Fusion Solutions Group</div>
+
+    </div>
+  </main>
+
+  <footer>
+    &copy; <span id="yr"></span> Fusion Solutions Group &nbsp;&middot;&nbsp;
+    <a href="https://www.fusionsg.com">fusionsg.com</a>
+  </footer>
+
+  <script>
+    lucide.createIcons();
+    document.getElementById('yr').textContent = new Date().getFullYear();
+  </script>
+</body>
+</html>
