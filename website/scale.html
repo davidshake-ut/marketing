@@ -1,0 +1,1127 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="description" content="The Technology Solutions Provider Growth Playbook: how electrical contractors and systems integrators evaluate, launch, and scale profitable technology capabilities using the S.C.A.L.E. framework." />
+  <title>The TSP Growth Playbook · Fusion Solutions Group</title>
+
+  <link rel="stylesheet" href="colors_and_type.css">
+  <link rel="icon" type="image/png" href="assets/fsg-logo.png">
+  <link rel="apple-touch-icon" href="assets/fsg-logo.png">
+  <script src="https://unpkg.com/lucide@0.460.0/dist/umd/lucide.min.js"></script>
+
+  <style>
+    /* =========================================================
+       Layout primitives (mirrors fusionsg.com homepage)
+       ========================================================= */
+    *, *::before, *::after { box-sizing: border-box; }
+    body { background: #fff; margin: 0; }
+    img { display: block; max-width: 100%; }
+    .container { width: min(var(--max-width), calc(100% - 2*var(--pad))); margin-inline: auto; }
+    section { padding: clamp(56px, 6vw, 88px) 0; }
+    [data-lucide] { width: 20px; height: 20px; stroke-width: 1.8; }
+    section[id] { scroll-margin-top: 84px; }
+
+    /* =========================================================
+       Top nav
+       ========================================================= */
+    .topbar {
+      position: sticky; top: 0; z-index: 50;
+      backdrop-filter: saturate(180%) blur(12px);
+      background: rgba(255,255,255,.86);
+      border-bottom: 1px solid var(--fsg-line);
+    }
+    .nav { display: flex; align-items: center; justify-content: space-between; padding: 12px 0; gap: 14px; }
+    .brand-mark { display: flex; align-items: center; gap: 10px; text-decoration: none; }
+    .brand-mark img { width: 36px; height: 36px; }
+    .brand-wordmark {
+      font-family: var(--font-head); font-weight: 800; font-size: 15px;
+      letter-spacing: -.3px; color: var(--fsg-ink);
+    }
+    .brand-wordmark .small { font-weight: 500; color: var(--fsg-muted); font-size: 11px; display: block; letter-spacing: .2px; }
+    .navlinks { display: flex; gap: 2px; font-family: var(--font-head); font-weight: 600; font-size: 13.5px; color: var(--fsg-ink-2); }
+    .navlinks a { padding: 9px 12px; border-radius: 10px; transition: var(--dur-fast); color: inherit; }
+    .navlinks a:hover { background: var(--fsg-brand-light); color: var(--fsg-brand); }
+    .nav-cta-group { display: flex; gap: 10px; align-items: center; }
+
+    /* =========================================================
+       Buttons
+       ========================================================= */
+    .btn {
+      display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+      padding: 11px 20px; border-radius: var(--radius);
+      font-family: var(--font-head); font-weight: 700; font-size: 14px;
+      border: 1.5px solid var(--fsg-line); background: #fff; color: var(--fsg-ink);
+      box-shadow: var(--shadow-sm); cursor: pointer; white-space: nowrap;
+      transition: transform var(--dur-fast), box-shadow var(--dur-fast), background var(--dur-fast);
+      letter-spacing: -.1px; text-decoration: none;
+    }
+    .btn:hover { transform: translateY(-2px); box-shadow: var(--shadow); color: var(--fsg-ink); }
+    .btn [data-lucide] { width: 16px; height: 16px; }
+    .btn.primary {
+      background: linear-gradient(160deg, var(--fsg-brand) 0%, var(--fsg-brand-dark) 100%);
+      color: #fff; border-color: transparent; box-shadow: var(--shadow-brand);
+    }
+    .btn.primary:hover { box-shadow: var(--shadow-brand-lg); color: #fff; }
+    .btn.accent {
+      background: linear-gradient(160deg, var(--fsg-accent) 0%, var(--fsg-accent-dark) 100%);
+      color: #fff; border-color: transparent; box-shadow: var(--shadow-accent);
+    }
+    .btn.accent:hover { color: #fff; }
+    .btn.outline-white { background: transparent; border-color: rgba(255,255,255,.30); color: #fff; box-shadow: none; }
+    .btn.outline-white:hover { background: rgba(255,255,255,.12); color: #fff; }
+    .btn-lg { padding: 14px 26px; font-size: 15px; border-radius: 16px; }
+
+    /* =========================================================
+       Hero
+       ========================================================= */
+    .hero {
+      padding: clamp(56px, 7vw, 96px) 0 clamp(52px, 6vw, 80px);
+      background:
+        radial-gradient(900px 500px at 15% 0%, rgba(12,83,148,.10), transparent 60%),
+        radial-gradient(700px 400px at 90% 15%, rgba(12,83,148,.07), transparent 55%),
+        radial-gradient(420px 320px at 50% 100%, rgba(232,132,12,.05), transparent 70%),
+        linear-gradient(180deg, #fff 0%, var(--fsg-bg) 100%);
+      border-bottom: 1px solid var(--fsg-line);
+      position: relative; overflow: hidden;
+    }
+    .hero::before {
+      content: ""; position: absolute; inset: 0; pointer-events: none;
+      background-image: radial-gradient(rgba(12,83,148,.07) 1px, transparent 1px);
+      background-size: 28px 28px;
+      mask-image: radial-gradient(ellipse 80% 80% at 50% 50%, black 0%, transparent 100%);
+    }
+    .hero-intro { max-width: 900px; margin: 0 auto; position: relative; z-index: 1; text-align: center; }
+    .eyebrow-chip {
+      display: inline-flex; align-items: center; gap: 10px;
+      padding: 7px 14px; border-radius: 999px;
+      background: var(--fsg-brand-light); color: var(--fsg-brand);
+      font-family: var(--font-head); font-weight: 700; font-size: 12.5px;
+      letter-spacing: .2px; border: 1px solid rgba(12,83,148,.15);
+    }
+    .eyebrow-chip .dot { width: 8px; height: 8px; border-radius: 999px; background: var(--fsg-brand); animation: pulse 2.4s infinite ease; }
+    @keyframes pulse {
+      0%, 100% { box-shadow: 0 0 0 0 rgba(12,83,148,.35); }
+      50%      { box-shadow: 0 0 0 8px rgba(12,83,148,0); }
+    }
+    h1.hero-h1 {
+      font-size: var(--t-display); font-weight: 800;
+      letter-spacing: -2px; line-height: 1.04; margin: 18px 0 26px;
+      text-wrap: balance;
+    }
+    h1.hero-h1 em { font-style: normal; color: var(--fsg-brand); }
+    .hero-problem {
+      font-size: 18px; line-height: 1.6; color: var(--fsg-ink-2);
+      max-width: 64ch; margin: 0 auto;
+      text-wrap: balance;
+      position: relative; padding-top: 16px;
+    }
+    .hero-problem::before {
+      content: ""; position: absolute; top: 0; left: 50%; transform: translateX(-50%);
+      width: 44px; height: 3px; border-radius: 2px;
+      background: var(--fsg-accent);
+    }
+    .hero-ctas { display: flex; gap: 12px; flex-wrap: wrap; justify-content: center; margin-top: 30px; }
+    .hero-promises {
+      display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px;
+      margin-top: clamp(36px, 4vw, 52px); position: relative; z-index: 1;
+    }
+    .promise-card {
+      border-radius: var(--radius-lg); border: 1px solid var(--fsg-line);
+      background: rgba(255,255,255,.88); box-shadow: var(--shadow-sm);
+      padding: 22px; text-align: left; transition: var(--dur);
+    }
+    .promise-card:hover { transform: translateY(-3px); box-shadow: var(--shadow); border-color: rgba(12,83,148,.20); }
+    .promise-card .p-icon {
+      width: 40px; height: 40px; border-radius: 12px; background: var(--fsg-brand-light);
+      display: grid; place-items: center; color: var(--fsg-brand); margin-bottom: 12px;
+    }
+    .promise-card strong { font-family: var(--font-head); font-weight: 700; font-size: 15px; display: block; margin-bottom: 5px; color: var(--fsg-ink); }
+    .promise-card span { color: var(--fsg-muted); font-size: 14px; line-height: 1.55; }
+
+    /* Hero intro staggered entrance */
+    .hero-intro .eyebrow-chip { animation: fadeUp .5s .05s both; }
+    .hero-intro h1            { animation: fadeUp .65s .15s both; }
+    .hero-intro .hero-problem { animation: fadeUp .65s .28s both; }
+    .hero-intro .hero-ctas    { animation: fadeUp .6s .40s both; }
+    .hero-promises .promise-card:nth-child(1) { animation: fadeUp .5s .5s both; }
+    .hero-promises .promise-card:nth-child(2) { animation: fadeUp .5s .62s both; }
+    .hero-promises .promise-card:nth-child(3) { animation: fadeUp .5s .74s both; }
+
+    /* =========================================================
+       Section header
+       ========================================================= */
+    .section-head { margin-bottom: 40px; }
+    .section-head h2 { margin-top: 10px; margin-bottom: 10px; }
+    .section-head p { color: var(--fsg-muted); max-width: 62ch; }
+    .section-head p.lead { color: var(--fsg-ink-2); }
+
+    .band-parchment { background: var(--fsg-bg); border-top: 1px solid var(--fsg-line); border-bottom: 1px solid var(--fsg-line); }
+
+    /* =========================================================
+       Cards & grids
+       ========================================================= */
+    .grid-2 { display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; }
+    .grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+    .grid-4 { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; }
+    .card {
+      border-radius: var(--radius-lg); border: 1px solid var(--fsg-line);
+      background: #fff; box-shadow: var(--shadow-sm);
+      padding: 24px; transition: var(--dur);
+    }
+    .card:hover { transform: translateY(-3px); box-shadow: var(--shadow); border-color: rgba(12,83,148,.20); }
+    .card h3 { font-size: 17px; margin: 0 0 8px; }
+    .card h4 { margin: 0 0 7px; }
+    .card p { font-size: 14px; line-height: 1.6; color: var(--fsg-ink-2); }
+    .card p.small { font-size: 13.5px; color: var(--fsg-muted); }
+    .card-icon {
+      width: 44px; height: 44px; border-radius: 13px; background: var(--fsg-brand-light);
+      display: grid; place-items: center; color: var(--fsg-brand); margin-bottom: 14px;
+    }
+    .card-icon [data-lucide] { width: 22px; height: 22px; }
+    .tag {
+      display: inline-flex; font-family: var(--font-head); font-weight: 800; font-size: 10.5px;
+      color: var(--fsg-brand); background: var(--fsg-brand-light);
+      border: 1px solid rgba(12,83,148,.14); border-radius: 999px; padding: 4px 10px;
+      letter-spacing: .3px; text-transform: uppercase; margin-bottom: 10px;
+    }
+    .tag.teal { color: var(--fsg-success); background: var(--fsg-success-bg); border-color: rgba(26,158,92,.18); }
+
+    .benefit { display: flex; gap: 14px; align-items: flex-start; }
+    .benefit .num {
+      width: 38px; height: 38px; border-radius: 999px; flex: 0 0 auto;
+      display: grid; place-items: center;
+      font-family: var(--font-head); font-weight: 800; font-size: 15px;
+      color: var(--fsg-brand); background: var(--fsg-brand-light);
+      border: 1px solid rgba(12,83,148,.14);
+    }
+
+    /* =========================================================
+       Callouts
+       ========================================================= */
+    .callout {
+      margin: 26px 0 0; padding: 18px 22px;
+      border-left: 4px solid var(--fsg-brand);
+      border-radius: 0 var(--radius) var(--radius) 0;
+      background: var(--fsg-brand-light);
+      font-size: 14.5px; line-height: 1.65; color: var(--fsg-ink-2);
+    }
+    .callout.warning { border-left-color: var(--fsg-accent); background: rgba(232,132,12,.09); }
+    .callout.success { border-left-color: var(--fsg-success); background: var(--fsg-success-bg); }
+    .callout b, .callout strong { color: var(--fsg-ink); }
+    .band-parchment .callout { background: #fff; border: 1px solid var(--fsg-line); border-left: 4px solid var(--fsg-brand); box-shadow: var(--shadow-sm); }
+    .band-parchment .callout.warning { border-left-color: var(--fsg-accent); }
+
+    /* =========================================================
+       Readiness assessment
+       ========================================================= */
+    .readiness-list { display: grid; grid-template-columns: repeat(2, 1fr); gap: 14px; margin: 0 0 22px; }
+    .readiness-item {
+      display: flex; flex-direction: column; justify-content: space-between; gap: 16px;
+      border-radius: var(--radius-lg); border: 1px solid var(--fsg-line);
+      background: #fff; box-shadow: var(--shadow-sm);
+      padding: 20px 22px; transition: var(--dur);
+    }
+    .readiness-item:hover { border-color: rgba(12,83,148,.22); box-shadow: var(--shadow); transform: translateY(-1px); }
+    .readiness-item.answered { border-color: rgba(12,83,148,.30); }
+    .readiness-question {
+      margin: 0; font-family: var(--font-head); font-weight: 600; font-size: 14.5px;
+      line-height: 1.5; color: var(--fsg-ink); letter-spacing: -.1px;
+    }
+    .readiness-options { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; }
+    .score-option {
+      position: relative; display: flex; align-items: center; justify-content: center; gap: 9px;
+      min-height: 46px; padding: 10px 12px;
+      border: 1.5px solid var(--fsg-line); border-radius: 12px;
+      background: var(--fsg-bg-2); color: var(--fsg-ink-2);
+      font-family: var(--font-head); font-size: 13px; font-weight: 700;
+      cursor: pointer; user-select: none; transition: all .18s ease;
+    }
+    .score-option:hover { border-color: rgba(12,83,148,.35); background: var(--fsg-brand-light); color: var(--fsg-brand); }
+    .score-option input { width: 17px; height: 17px; margin: 0; accent-color: var(--fsg-brand); cursor: pointer; }
+    .score-option:has(input:checked) {
+      border-color: var(--fsg-brand); background: var(--fsg-brand-light); color: var(--fsg-brand);
+      box-shadow: 0 0 0 3px rgba(12,83,148,.10);
+    }
+    .score-option.no:has(input:checked) {
+      border-color: var(--fsg-accent); background: rgba(232,132,12,.10); color: var(--fsg-accent-dark);
+      box-shadow: 0 0 0 3px rgba(232,132,12,.10);
+    }
+
+    .score-panel {
+      display: grid; grid-template-columns: auto minmax(0,1fr) auto; align-items: center;
+      gap: clamp(16px, 2.5vw, 28px); margin: 0 0 22px;
+      padding: clamp(22px, 3vw, 30px); border-radius: var(--radius-lg);
+      background:
+        radial-gradient(360px 220px at 100% 0%, rgba(12,83,148,.35), transparent 65%),
+        radial-gradient(280px 200px at 0% 100%, rgba(232,132,12,.14), transparent 70%),
+        var(--fsg-bg-dark);
+      color: #fff; box-shadow: var(--shadow-lg);
+      border: 1px solid var(--fsg-line-dark);
+    }
+    .score-badge {
+      width: clamp(104px, 13vw, 128px); aspect-ratio: 1; border-radius: 999px;
+      display: grid; place-items: center; text-align: center;
+      background: rgba(255,255,255,.07); border: 2px solid rgba(255,255,255,.20);
+    }
+    .score-badge strong { display: block; font-family: var(--font-head); font-size: clamp(38px, 5vw, 52px); font-weight: 800; line-height: .9; color: #fff; }
+    .score-badge span { display: block; margin-top: 7px; font-family: var(--font-head); font-size: 10.5px; font-weight: 800; letter-spacing: .8px; text-transform: uppercase; color: rgba(255,255,255,.55); }
+    .score-copy h3 { margin: 0 0 6px; color: #fff; font-size: clamp(19px, 2vw, 23px); }
+    .score-copy p { margin: 0; color: rgba(255,255,255,.65); font-size: 14.5px; }
+    .score-progress { height: 7px; margin-top: 14px; overflow: hidden; border-radius: 999px; background: rgba(255,255,255,.14); }
+    .score-progress span { display: block; width: 0; height: 100%; border-radius: inherit; background: var(--fsg-accent); transition: width .25s ease; }
+    .reset-score {
+      border: 1px solid rgba(255,255,255,.35); border-radius: 10px; padding: 10px 14px;
+      background: transparent; color: #fff;
+      font-family: var(--font-head); font-size: 12.5px; font-weight: 700;
+      cursor: pointer; white-space: nowrap; transition: background var(--dur-fast);
+    }
+    .reset-score:hover { background: rgba(255,255,255,.12); }
+    .score-guide .card { text-align: center; }
+    .score-guide .card h4 { color: var(--fsg-brand); }
+
+    /* =========================================================
+       S.C.A.L.E. (dark) — matches homepage
+       ========================================================= */
+    .scale-section { background: var(--fsg-bg-dark); color: #fff; position: relative; overflow: hidden; }
+    .scale-section::before { content: ""; position: absolute; top: -200px; left: -200px; width: 600px; height: 600px; border-radius: 999px; background: radial-gradient(circle, rgba(12,83,148,.30), transparent 65%); }
+    .scale-section::after  { content: ""; position: absolute; bottom: -150px; right: -100px; width: 400px; height: 400px; border-radius: 999px; background: radial-gradient(circle, rgba(12,83,148,.18), transparent 65%); }
+    .scale-section .container { position: relative; z-index: 1; }
+    .scale-section .fsg-eyebrow { color: rgba(255,255,255,.50); }
+    .scale-section h2 { color: #fff; }
+    .scale-section .section-head p { color: rgba(255,255,255,.60); }
+    .scale-cards { display: grid; grid-template-columns: repeat(5, 1fr); gap: 14px; }
+    .scale-card { border-radius: var(--radius); border: 1px solid rgba(255,255,255,.08);
+                  background: rgba(255,255,255,.05); padding: 22px 18px;
+                  transition: var(--dur); }
+    .scale-card:hover { background: rgba(255,255,255,.09); border-color: rgba(255,255,255,.18); transform: translateY(-3px); }
+    .scale-letter-row { display: flex; align-items: center; gap: 12px; margin-bottom: 18px; }
+    .scale-lchar { width: 40px; height: 40px; border-radius: 12px; background: var(--fsg-accent);
+                   box-shadow: 0 4px 16px rgba(232,132,12,.45);
+                   display: grid; place-items: center; font-family: var(--font-head); font-weight: 800; font-size: 20px;
+                   color: #fff; transition: box-shadow .25s, transform .25s; }
+    .scale-card:hover .scale-lchar { box-shadow: 0 6px 24px rgba(232,132,12,.70); transform: scale(1.08); }
+    .scale-lword { font-family: var(--font-head); font-weight: 800; font-size: 15px;
+                   color: #fff; text-transform: uppercase; letter-spacing: 2px; line-height: 1; }
+    .scale-card-h3 { font-family: var(--font-head); font-weight: 600; font-size: 15px; color: rgba(255,255,255,.78); margin: 0 0 8px; }
+    .scale-card-p  { font-size: 13px; color: rgba(255,255,255,.55); line-height: 1.6; margin: 0; }
+    .scale-note {
+      margin-top: 26px; padding: 18px 22px; border-radius: var(--radius);
+      background: rgba(255,255,255,.05); border: 1px solid rgba(255,255,255,.10);
+      font-size: 14.5px; line-height: 1.65; color: rgba(255,255,255,.65);
+    }
+    .scale-note b { color: #fff; }
+
+    /* =========================================================
+       Stage cards (S+C / L+E)
+       ========================================================= */
+    .stage-card { position: relative; overflow: hidden; }
+    .stage-card .stage-letter {
+      position: absolute; top: -10px; right: 8px;
+      font-family: var(--font-head); font-size: 92px; font-weight: 800; line-height: 1;
+      color: var(--fsg-brand-light); pointer-events: none;
+    }
+    .stage-card > * { position: relative; }
+    .stage-card h3 { font-size: 19px; }
+    .checklist { list-style: none; margin: 12px 0 0; padding: 0; display: grid; gap: 8px; }
+    .checklist li { display: flex; gap: 10px; align-items: flex-start; font-size: 14px; line-height: 1.55; color: var(--fsg-ink-2); }
+    .checklist li .ck {
+      width: 20px; height: 20px; border-radius: 999px; flex: 0 0 auto; margin-top: 1px;
+      background: linear-gradient(135deg, var(--fsg-brand), var(--fsg-brand-dark));
+      display: grid; place-items: center; color: #fff;
+    }
+    .checklist li .ck [data-lucide] { width: 12px; height: 12px; stroke-width: 3; }
+    .trap {
+      margin-top: 16px; padding: 12px 14px; border-radius: 12px;
+      background: rgba(232,132,12,.09); border: 1px solid rgba(232,132,12,.18);
+      font-size: 13px; line-height: 1.55; color: var(--fsg-ink-2);
+    }
+    .trap b { color: var(--fsg-accent-dark); }
+
+    /* =========================================================
+       Mid CTA
+       ========================================================= */
+    .mini-cta {
+      display: flex; align-items: center; justify-content: space-between; gap: 28px; flex-wrap: wrap;
+      margin-top: 32px; padding: clamp(22px, 3vw, 30px); border-radius: var(--radius-lg);
+      background:
+        radial-gradient(360px 220px at 100% 0%, rgba(12,83,148,.35), transparent 65%),
+        var(--fsg-bg-dark);
+      color: #fff; border: 1px solid var(--fsg-line-dark); box-shadow: var(--shadow-lg);
+    }
+    .mini-cta h3 { color: #fff; margin: 0 0 6px; font-size: 19px; }
+    .mini-cta p { margin: 0; color: rgba(255,255,255,.65); font-size: 14.5px; max-width: 56ch; }
+
+    /* =========================================================
+       Hiring — look for / watch for (fit-panel style)
+       ========================================================= */
+    .fit-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; margin-top: 32px; }
+    .fit-panel { border-radius: var(--radius-lg); border: 1px solid var(--fsg-line);
+                 background: #fff; box-shadow: var(--shadow-sm); padding: 28px; }
+    .fit-panel.yes-panel { border-top: 3px solid var(--fsg-success); }
+    .fit-panel.no-panel  { border-top: 3px solid var(--fsg-danger); }
+    .fit-panel h3 { font-size: 17px; margin: 0 0 20px; display: flex; align-items: center; gap: 10px; }
+    .fit-panel h3 .badge { width: 28px; height: 28px; border-radius: 999px; display: grid; place-items: center; flex: 0 0 auto; font-weight: 800; }
+    .fit-panel h3 .badge.y { background: var(--fsg-success-bg); color: var(--fsg-success); }
+    .fit-panel h3 .badge.n { background: var(--fsg-danger-bg); color: var(--fsg-danger); }
+    .fit-list { display: grid; gap: 10px; }
+    .fit-item { display: flex; gap: 12px; font-size: 14.5px; line-height: 1.55; color: var(--fsg-ink-2);
+                padding: 10px 12px; border-radius: 10px; transition: background var(--dur-fast); }
+    .fit-item:hover { background: var(--fsg-bg); }
+    .fit-item .ico { font-weight: 800; flex: 0 0 auto; }
+    .yes-panel .fit-item .ico { color: var(--fsg-success); }
+    .no-panel  .fit-item .ico { color: var(--fsg-danger);  }
+
+    .role-when { font-family: var(--font-head); font-size: 10.5px; font-weight: 800; text-transform: uppercase; letter-spacing: .8px; color: var(--fsg-success); margin-bottom: 8px; }
+
+    /* =========================================================
+       Comparison table
+       ========================================================= */
+    .table-wrap { overflow-x: auto; border-radius: var(--radius-lg); border: 1px solid var(--fsg-line); box-shadow: var(--shadow-sm); background: #fff; }
+    .comparison { width: 100%; border-collapse: collapse; font-size: 14px; }
+    .comparison th, .comparison td { padding: 14px 16px; text-align: left; vertical-align: top; border-bottom: 1px solid var(--fsg-line); }
+    .comparison th {
+      background: var(--fsg-bg-dark); color: #fff;
+      font-family: var(--font-head); font-weight: 700; font-size: 12.5px;
+      letter-spacing: .3px; text-transform: uppercase;
+    }
+    .comparison tr:last-child td { border-bottom: none; }
+    .comparison td:first-child { font-family: var(--font-head); font-weight: 700; color: var(--fsg-ink); width: 16%; }
+    .comparison td:nth-child(2) { width: 38%; color: var(--fsg-muted); }
+    .comparison td:nth-child(3) { width: 46%; color: var(--fsg-ink-2); background: rgba(12,83,148,.035); }
+    .comparison tbody tr { transition: background var(--dur-fast); }
+    .comparison tbody tr:hover td { background: var(--fsg-bg-2); }
+    .comparison tbody tr:hover td:nth-child(3) { background: rgba(12,83,148,.06); }
+
+    /* =========================================================
+       Timeline
+       ========================================================= */
+    .timeline { display: grid; gap: 12px; }
+    .timeline-row { display: grid; grid-template-columns: 122px 1fr; gap: 14px; }
+    .timeline-date {
+      border-radius: var(--radius); display: grid; place-items: center; text-align: center;
+      padding: 14px 10px; font-family: var(--font-head); font-weight: 800; font-size: 13.5px;
+      color: #fff; background: linear-gradient(160deg, var(--fsg-brand) 0%, var(--fsg-brand-dark) 100%);
+      box-shadow: var(--shadow-brand);
+    }
+    .timeline-body {
+      padding: 16px 20px; border: 1px solid var(--fsg-line); border-radius: var(--radius);
+      background: #fff; box-shadow: var(--shadow-sm);
+      font-size: 14.5px; line-height: 1.6; color: var(--fsg-ink-2);
+    }
+    .timeline-body b { font-family: var(--font-head); color: var(--fsg-ink); }
+
+    /* =========================================================
+       KPI cards
+       ========================================================= */
+    .kpi {
+      border-radius: var(--radius-lg); padding: 20px;
+      background:
+        radial-gradient(220px 160px at 100% 0%, rgba(12,83,148,.35), transparent 70%),
+        var(--fsg-bg-dark);
+      color: #fff; border: 1px solid var(--fsg-line-dark);
+    }
+    .kpi .metric { font-family: var(--font-head); color: var(--fsg-accent); font-size: 10.5px; font-weight: 800; text-transform: uppercase; letter-spacing: .8px; }
+    .kpi strong { display: block; font-family: var(--font-head); font-size: 19px; font-weight: 800; margin: 6px 0 6px; color: #fff; letter-spacing: -.3px; }
+    .kpi span { font-size: 13px; color: rgba(255,255,255,.60); line-height: 1.55; }
+
+    /* =========================================================
+       Final CTA (dark)
+       ========================================================= */
+    .cta-section { background: var(--fsg-bg-dark); color: #fff; position: relative; overflow: hidden; }
+    .cta-section::before { content: ""; position: absolute; top: -200px; right: -200px; width: 620px; height: 620px; border-radius: 999px; background: radial-gradient(circle, rgba(12,83,148,.32), transparent 65%); }
+    .cta-section::after  { content: ""; position: absolute; bottom: -140px; left: -100px; width: 420px; height: 420px; border-radius: 999px; background: radial-gradient(circle, rgba(232,132,12,.14), transparent 65%); }
+    .cta-section .container { position: relative; z-index: 1; }
+    .cta-section .fsg-eyebrow { color: var(--fsg-accent); }
+    .cta-section h2 { color: #fff; }
+    .cta-section .section-head p { color: rgba(255,255,255,.65); }
+    .failure-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-bottom: 34px; }
+    .failure-card {
+      border-radius: var(--radius); border: 1px solid rgba(255,255,255,.10);
+      background: rgba(255,255,255,.05); padding: 20px 22px; transition: var(--dur);
+    }
+    .failure-card:hover { background: rgba(255,255,255,.08); border-color: rgba(255,255,255,.18); }
+    .failure-card strong { display: block; font-family: var(--font-head); font-weight: 700; font-size: 15px; color: #fff; margin-bottom: 6px; }
+    .failure-card span { font-size: 13.5px; line-height: 1.6; color: rgba(255,255,255,.55); }
+    .cta-box {
+      display: grid; grid-template-columns: minmax(0,1fr) auto; gap: clamp(20px, 3vw, 36px); align-items: center;
+      padding: clamp(24px, 3vw, 34px); border-radius: var(--radius-lg);
+      background: rgba(255,255,255,.06); border: 1px solid rgba(255,255,255,.12);
+    }
+    .cta-box h3 { color: #fff; font-size: clamp(19px, 2.2vw, 24px); margin: 0 0 8px; }
+    .cta-box p { color: rgba(255,255,255,.65); font-size: 14.5px; line-height: 1.65; margin: 0 0 14px; max-width: 60ch; }
+    .cta-url { font-family: var(--font-head); font-weight: 700; color: var(--fsg-accent); font-size: 15px; word-break: break-word; }
+    .cta-url:hover { color: #fff; }
+
+    /* =========================================================
+       Footer
+       ========================================================= */
+    footer { background: var(--fsg-bg-dark); color: rgba(255,255,255,.55); padding: 40px 0; border-top: 1px solid var(--fsg-line-dark); }
+    .foot { display: flex; justify-content: space-between; align-items: center; gap: 16px; flex-wrap: wrap; }
+    .foot-brand { display: flex; align-items: center; gap: 10px; }
+    .foot-brand img { width: 28px; height: 28px; opacity: .9; }
+    .foot-brand .wm { font-family: var(--font-head); font-weight: 700; color: #fff; font-size: 14px; }
+    .miniLinks { display: flex; gap: 8px; flex-wrap: wrap; }
+    .miniLinks a { padding: 7px 12px; border-radius: 10px; background: rgba(255,255,255,.06);
+                   border: 1px solid rgba(255,255,255,.08);
+                   font-family: var(--font-head); font-weight: 700; font-size: 12px; color: rgba(255,255,255,.60); }
+    .miniLinks a:hover { background: rgba(255,255,255,.12); color: rgba(255,255,255,.95); }
+    .copy { font-size: 12px; }
+
+    /* =========================================================
+       Scroll reveal
+       ========================================================= */
+    @keyframes fadeUp { from { opacity:0; transform:translateY(24px); } to { opacity:1; transform:translateY(0); } }
+    .reveal { opacity: 0; transform: translateY(22px); transition: opacity .55s var(--ease-out), transform .55s var(--ease-out); }
+    .reveal.visible { opacity: 1; transform: translateY(0); }
+    .rd-1 { transition-delay: .08s; }
+    .rd-2 { transition-delay: .16s; }
+    .rd-3 { transition-delay: .24s; }
+    .rd-4 { transition-delay: .32s; }
+    @media (prefers-reduced-motion: reduce) {
+      .hero-intro .eyebrow-chip, .hero-intro h1, .hero-intro .hero-problem,
+      .hero-intro .hero-ctas, .hero-promises .promise-card { animation: none !important; }
+      .reveal { opacity: 1; transform: none; transition: none; }
+    }
+
+    /* =========================================================
+       Responsive
+       ========================================================= */
+    @media (max-width: 1000px) {
+      .grid-3, .grid-4 { grid-template-columns: 1fr 1fr; }
+      .scale-cards { grid-template-columns: 1fr 1fr; }
+      .fit-grid, .failure-grid { grid-template-columns: 1fr; }
+      .score-panel { grid-template-columns: auto 1fr; }
+      .reset-score { grid-column: 1 / -1; justify-self: start; }
+      .cta-box { grid-template-columns: 1fr; }
+    }
+    @media (max-width: 720px) {
+      .navlinks { display: none; }
+      .hero-promises, .grid-2, .grid-3, .grid-4, .scale-cards, .readiness-list { grid-template-columns: 1fr; }
+      .readiness-options { grid-template-columns: 1fr 1fr; }
+      .score-panel { grid-template-columns: 1fr; text-align: center; }
+      .score-badge { margin-inline: auto; }
+      .reset-score { justify-self: center; }
+      .timeline-row { grid-template-columns: 1fr; }
+      .timeline-date { justify-self: start; min-width: 122px; }
+      .mini-cta { flex-direction: column; align-items: flex-start; }
+    }
+    @media (max-width: 460px) {
+      .readiness-options { grid-template-columns: 1fr; }
+    }
+
+    /* =========================================================
+       Print
+       ========================================================= */
+    @media print {
+      @page { size: Letter; margin: .45in; }
+      body { background: #fff; font-size: 10pt; }
+      .topbar, .btn, .reset-score, .hero-ctas, .miniLinks { display: none !important; }
+      section { padding: .3in 0; }
+      .hero { border-bottom: 1px solid var(--fsg-line); }
+      .reveal { opacity: 1 !important; transform: none !important; }
+      .card, .callout, .mini-cta, .timeline-row, .kpi, .readiness-item, .fit-panel,
+      .scale-card, .failure-card, .table-wrap, .score-panel { break-inside: avoid; box-shadow: none; }
+      .scale-section, .cta-section, .mini-cta, .kpi, .score-panel {
+        background: #eef4f9 !important; color: var(--fsg-ink) !important;
+        -webkit-print-color-adjust: exact; print-color-adjust: exact;
+      }
+      .scale-section h2, .cta-section h2, .mini-cta h3, .cta-box h3, .score-copy h3,
+      .scale-lword, .kpi strong, .failure-card strong { color: var(--fsg-ink) !important; }
+      .scale-card-h3, .scale-card-p, .scale-note, .mini-cta p, .kpi span,
+      .failure-card span, .cta-box p, .score-copy p, .cta-section .section-head p,
+      .scale-section .section-head p { color: var(--fsg-ink-2) !important; }
+      .scale-card, .failure-card, .cta-box, .scale-note { border-color: var(--fsg-line); background: #fff !important; }
+      .score-badge { background: var(--fsg-brand) !important; border-color: var(--fsg-brand); }
+      .score-badge strong, .score-badge span { color: #fff !important; }
+      footer { background: #fff; color: var(--fsg-muted); border-top: 1px solid var(--fsg-line); }
+      .foot-brand .wm { color: var(--fsg-ink); }
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- ───────── TOP NAV ───────── -->
+  <header class="topbar">
+    <div class="container">
+      <div class="nav">
+        <a class="brand-mark" href="/" aria-label="Fusion Solutions Group home">
+          <img src="assets/fsg-logo.png" alt="">
+          <div class="brand-wordmark">
+            Fusion Solutions Group
+            <span class="small">The TSP Growth Playbook</span>
+          </div>
+        </a>
+        <nav class="navlinks" aria-label="Primary">
+          <a href="#opportunity">Why Expand</a>
+          <a href="#readiness">Readiness Check</a>
+          <a href="#framework">S.C.A.L.E.</a>
+          <a href="#hiring">Hiring</a>
+          <a href="#plan">90-Day Plan</a>
+        </nav>
+        <div class="nav-cta-group">
+          <a class="btn primary" href="https://connect.fusionsg.com/strategy" target="_blank" rel="noopener">Book a strategy call</a>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- ───────── HERO ───────── -->
+  <main id="top" class="hero">
+    <div class="container">
+      <div class="hero-intro">
+        <span class="eyebrow-chip"><span class="dot"></span> A Practical Executive Field Guide</span>
+        <h1 class="hero-h1">The Technology Solutions Provider <em>Growth Playbook</em></h1>
+        <p class="hero-problem">
+          How electrical contractors and systems integrators can evaluate, launch, and scale profitable technology capabilities using the S.C.A.L.E. framework.
+        </p>
+        <div class="hero-ctas">
+          <a class="btn primary btn-lg" href="#readiness"><i data-lucide="list-checks"></i> Take the readiness check</a>
+          <a class="btn btn-lg" href="https://connect.fusionsg.com/strategy" target="_blank" rel="noopener"><i data-lucide="calendar"></i> Book a strategy call</a>
+        </div>
+      </div>
+
+      <div class="hero-promises">
+        <div class="promise-card">
+          <div class="p-icon"><i data-lucide="target"></i></div>
+          <strong>Choose the right market</strong>
+          <span>Start with customer demand and strategic fit, not the newest product line.</span>
+        </div>
+        <div class="promise-card">
+          <div class="p-icon"><i data-lucide="settings-2"></i></div>
+          <strong>Build the operating model</strong>
+          <span>Define ownership, estimating, project delivery, support, and financial controls.</span>
+        </div>
+        <div class="promise-card">
+          <div class="p-icon"><i data-lucide="rocket"></i></div>
+          <strong>Launch with discipline</strong>
+          <span>Prove the model through a controlled pilot before investing for scale.</span>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <!-- ───────── 01 · WHY EXPAND ───────── -->
+  <section id="opportunity">
+    <div class="container">
+      <div class="section-head">
+        <span class="fsg-eyebrow">01 · The Business Case</span>
+        <h2>Why expand your technology capabilities, and why now?</h2>
+        <p class="lead">Electrical contractors and systems integrators already possess many of the assets that are hardest to build: trusted customer relationships, field leadership, project-delivery discipline, access to construction and technology projects, and credibility with owners. Expanding into the right adjacent technology can produce more revenue per customer, stronger differentiation, and a more durable business.</p>
+      </div>
+
+      <div class="callout" style="margin: 0 0 28px;">
+        <strong>Who this guide is for:</strong> electrical contractors starting or growing a low-voltage division, and systems integrators expanding into new technology lines. Throughout this guide, we use <strong>Technology Solutions Provider (TSP)</strong> as the broader term for both.
+      </div>
+
+      <div class="grid-2">
+        <div class="card benefit reveal">
+          <span class="num">1</span>
+          <div><h4>Capture more project scope</h4><p>Keep structured cabling, access control, surveillance, networking, and smart-building work that is currently subcontracted or awarded elsewhere.</p></div>
+        </div>
+        <div class="card benefit reveal rd-1">
+          <span class="num">2</span>
+          <div><h4>Protect key accounts</h4><p>The provider helping define and support the building's technology systems gains influence over future projects, service, upgrades, and capital planning.</p></div>
+        </div>
+        <div class="card benefit reveal rd-2">
+          <span class="num">3</span>
+          <div><h4>Create recurring revenue</h4><p>Monitoring, cloud licensing, managed services, inspections, maintenance, and support can extend revenue beyond construction closeout.</p></div>
+        </div>
+        <div class="card benefit reveal rd-3">
+          <span class="num">4</span>
+          <div><h4>Improve business resilience</h4><p>A broader capability set, specialized expertise, service revenue, and embedded customer relationships can strengthen enterprise value.</p></div>
+        </div>
+      </div>
+
+      <h3 style="margin: 40px 0 16px;">Do not try to become everything at once</h3>
+      <p style="color: var(--fsg-ink-2); max-width: 70ch; margin-bottom: 20px;">The best first service line sits at the intersection of existing customer demand, internal capability, attractive economics, and manageable delivery risk.</p>
+
+      <div class="grid-4">
+        <div class="card reveal"><div class="card-icon"><i data-lucide="cable"></i></div><h4>Lower complexity</h4><p class="small">Structured cabling or a focused device-installation scope.</p></div>
+        <div class="card reveal rd-1"><div class="card-icon"><i data-lucide="shield-check"></i></div><h4>Strong adjacency</h4><p class="small">Access control or surveillance where electrical coordination creates an advantage.</p></div>
+        <div class="card reveal rd-2"><div class="card-icon"><i data-lucide="wifi"></i></div><h4>Higher differentiation</h4><p class="small">Managed Wi-Fi, smart building, AV, or integrated systems.</p></div>
+        <div class="card reveal rd-3"><div class="card-icon"><i data-lucide="refresh-ccw"></i></div><h4>Lifecycle value</h4><p class="small">Services with monitoring, software, maintenance, and support.</p></div>
+      </div>
+
+      <div class="callout warning">
+        <strong>The central risk:</strong> an adjacent technology may look familiar from the outside, but its economics, engineering, software, commissioning, documentation, integrations, and support obligations can be materially different from your current business.
+      </div>
+    </div>
+  </section>
+
+  <!-- ───────── 02 · READINESS CHECK ───────── -->
+  <section id="readiness" class="band-parchment">
+    <div class="container">
+      <div class="section-head">
+        <span class="fsg-eyebrow">02 · Interactive Readiness Check</span>
+        <h2>Should you start now?</h2>
+        <p class="lead">Success in your current trade or technology does not automatically translate into success in the next one. Answer each statement honestly. Your readiness score updates automatically.</p>
+      </div>
+
+      <div class="readiness-list" id="readiness-assessment">
+        <div class="readiness-item" data-question="1">
+          <p class="readiness-question">1. Existing customers are already asking us for additional technology or integrated-system scope.</p>
+          <div class="readiness-options" role="radiogroup" aria-label="Question 1">
+            <label class="score-option yes"><input type="radio" name="readiness-1" value="yes" /> Yes <span aria-hidden="true">+1</span></label>
+            <label class="score-option no"><input type="radio" name="readiness-1" value="no" /> Not yet <span aria-hidden="true">+0</span></label>
+          </div>
+        </div>
+        <div class="readiness-item" data-question="2">
+          <p class="readiness-question">2. We can identify one initial service line and one ideal customer profile.</p>
+          <div class="readiness-options" role="radiogroup" aria-label="Question 2">
+            <label class="score-option yes"><input type="radio" name="readiness-2" value="yes" /> Yes <span aria-hidden="true">+1</span></label>
+            <label class="score-option no"><input type="radio" name="readiness-2" value="no" /> Not yet <span aria-hidden="true">+0</span></label>
+          </div>
+        </div>
+        <div class="readiness-item" data-question="3">
+          <p class="readiness-question">3. An executive sponsor has time and authority to own the launch.</p>
+          <div class="readiness-options" role="radiogroup" aria-label="Question 3">
+            <label class="score-option yes"><input type="radio" name="readiness-3" value="yes" /> Yes <span aria-hidden="true">+1</span></label>
+            <label class="score-option no"><input type="radio" name="readiness-3" value="no" /> Not yet <span aria-hidden="true">+0</span></label>
+          </div>
+        </div>
+        <div class="readiness-item" data-question="4">
+          <p class="readiness-question">4. We can track the new capability's revenue, margin, backlog, labor, and recurring revenue separately.</p>
+          <div class="readiness-options" role="radiogroup" aria-label="Question 4">
+            <label class="score-option yes"><input type="radio" name="readiness-4" value="yes" /> Yes <span aria-hidden="true">+1</span></label>
+            <label class="score-option no"><input type="radio" name="readiness-4" value="no" /> Not yet <span aria-hidden="true">+0</span></label>
+          </div>
+        </div>
+        <div class="readiness-item" data-question="5">
+          <p class="readiness-question">5. We understand the design, licensing, configuration, and support requirements.</p>
+          <div class="readiness-options" role="radiogroup" aria-label="Question 5">
+            <label class="score-option yes"><input type="radio" name="readiness-5" value="yes" /> Yes <span aria-hidden="true">+1</span></label>
+            <label class="score-option no"><input type="radio" name="readiness-5" value="no" /> Not yet <span aria-hidden="true">+0</span></label>
+          </div>
+        </div>
+        <div class="readiness-item" data-question="6">
+          <p class="readiness-question">6. We have access to engineering and technical escalation when needed.</p>
+          <div class="readiness-options" role="radiogroup" aria-label="Question 6">
+            <label class="score-option yes"><input type="radio" name="readiness-6" value="yes" /> Yes <span aria-hidden="true">+1</span></label>
+            <label class="score-option no"><input type="radio" name="readiness-6" value="no" /> Not yet <span aria-hidden="true">+0</span></label>
+          </div>
+        </div>
+        <div class="readiness-item" data-question="7">
+          <p class="readiness-question">7. We are willing to pilot, measure, and refine before pursuing volume.</p>
+          <div class="readiness-options" role="radiogroup" aria-label="Question 7">
+            <label class="score-option yes"><input type="radio" name="readiness-7" value="yes" /> Yes <span aria-hidden="true">+1</span></label>
+            <label class="score-option no"><input type="radio" name="readiness-7" value="no" /> Not yet <span aria-hidden="true">+0</span></label>
+          </div>
+        </div>
+        <div class="readiness-item" data-question="8">
+          <p class="readiness-question">8. We can fund training, certifications, tools, demo equipment, and working capital.</p>
+          <div class="readiness-options" role="radiogroup" aria-label="Question 8">
+            <label class="score-option yes"><input type="radio" name="readiness-8" value="yes" /> Yes <span aria-hidden="true">+1</span></label>
+            <label class="score-option no"><input type="radio" name="readiness-8" value="no" /> Not yet <span aria-hidden="true">+0</span></label>
+          </div>
+        </div>
+      </div>
+
+      <div class="score-panel" id="score-panel" aria-live="polite">
+        <div class="score-badge"><div><strong id="score-number">0</strong><span>out of 8</span></div></div>
+        <div class="score-copy">
+          <h3 id="score-title">Complete the assessment</h3>
+          <p id="score-message">Choose Yes or Not yet for each statement. Each Yes answer is worth one point.</p>
+          <div class="score-progress" aria-hidden="true"><span id="score-progress-bar"></span></div>
+        </div>
+        <button class="reset-score" id="reset-score" type="button">Reset score</button>
+      </div>
+
+      <div class="grid-3 score-guide">
+        <div class="card reveal"><h4>6&ndash;8 Yes answers</h4><p>You may be ready for structured planning and pilot selection.</p></div>
+        <div class="card reveal rd-1"><h4>3&ndash;5 Yes answers</h4><p>The opportunity may be sound, but important capability gaps remain.</p></div>
+        <div class="card reveal rd-2"><h4>0&ndash;2 Yes answers</h4><p>Validate demand and leadership commitment before making a major investment.</p></div>
+      </div>
+
+      <div class="mini-cta reveal">
+        <div>
+          <h3>Not sure which gaps matter most?</h3>
+          <p>A focused strategy session can identify the right starting lane, critical risks, and practical next steps.</p>
+        </div>
+        <a class="btn accent btn-lg" href="https://connect.fusionsg.com/strategy" target="_blank" rel="noopener"><i data-lucide="calendar"></i> Book a strategy call</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ───────── 03 · S.C.A.L.E. ───────── -->
+  <section id="framework" class="scale-section">
+    <div class="container">
+      <div class="section-head">
+        <span class="fsg-eyebrow">03 · The S.C.A.L.E. Framework</span>
+        <h2>Build the new capability deliberately</h2>
+        <p class="lead">S.C.A.L.E. converts an attractive technology idea into a controlled business initiative. Each stage answers a different executive question and creates a gate before the next investment.</p>
+      </div>
+      <div class="scale-cards">
+        <div class="scale-card reveal">
+          <div class="scale-letter-row"><span class="scale-lchar">S</span><span class="scale-lword">Survey</span></div>
+          <h3 class="scale-card-h3">Survey the business</h3>
+          <p class="scale-card-p">What demand, capabilities, financial constraints, risks, and assets exist today?</p>
+        </div>
+        <div class="scale-card reveal rd-1">
+          <div class="scale-letter-row"><span class="scale-lchar">C</span><span class="scale-lword">Clarify</span></div>
+          <h3 class="scale-card-h3">Clarify the opportunity</h3>
+          <p class="scale-card-p">Which customer, technology line, business model, and outcome should the company pursue first?</p>
+        </div>
+        <div class="scale-card reveal rd-2">
+          <div class="scale-letter-row"><span class="scale-lchar">A</span><span class="scale-lword">Architect</span></div>
+          <h3 class="scale-card-h3">Architect the plan</h3>
+          <p class="scale-card-p">What organization, partners, processes, tools, training, and controls are required to deliver it reliably?</p>
+        </div>
+        <div class="scale-card reveal rd-3">
+          <div class="scale-letter-row"><span class="scale-lchar">L</span><span class="scale-lword">Launch</span></div>
+          <h3 class="scale-card-h3">Launch the initiatives</h3>
+          <p class="scale-card-p">How will the team prove the model through a controlled, customer-safe pilot?</p>
+        </div>
+        <div class="scale-card reveal rd-4">
+          <div class="scale-letter-row"><span class="scale-lchar">E</span><span class="scale-lword">Evaluate</span></div>
+          <h3 class="scale-card-h3">Evaluate and improve</h3>
+          <p class="scale-card-p">What did the pilot prove, what must change, and should the company stop, refine, or scale?</p>
+        </div>
+      </div>
+      <div class="scale-note reveal">
+        <b>The framework is sequential, but not rigid.</b> New information may require the team to return to an earlier decision. That is less expensive than discovering a weak assumption after the company has hired, sold, and mobilized.
+      </div>
+    </div>
+  </section>
+
+  <!-- ───────── 04 · SURVEY + CLARIFY ───────── -->
+  <section id="survey-clarify">
+    <div class="container">
+      <div class="section-head">
+        <span class="fsg-eyebrow">04 · Survey + Clarify</span>
+        <h2>Survey first. Then clarify.</h2>
+      </div>
+      <div class="grid-2">
+        <div class="card stage-card reveal">
+          <span class="stage-letter" aria-hidden="true">S</span>
+          <span class="tag">Executive question</span>
+          <h3>Survey the Business</h3>
+          <p>Build a fact base before choosing the next technology, manufacturer, or partner.</p>
+          <ul class="checklist">
+            <li><span class="ck"><i data-lucide="check"></i></span>Customer requests and lost scope</li>
+            <li><span class="ck"><i data-lucide="check"></i></span>Recent project mix and target verticals</li>
+            <li><span class="ck"><i data-lucide="check"></i></span>Current sales, design, field, PM, estimating, and service capability</li>
+            <li><span class="ck"><i data-lucide="check"></i></span>Licensing, compliance, and geographic constraints</li>
+            <li><span class="ck"><i data-lucide="check"></i></span>Leadership capacity and investment tolerance</li>
+          </ul>
+          <div class="trap"><b>Common trap:</b> allowing a manufacturer relationship or one salesperson's enthusiasm to define the strategy.</div>
+        </div>
+        <div class="card stage-card reveal rd-1">
+          <span class="stage-letter" aria-hidden="true">C</span>
+          <span class="tag">Executive question</span>
+          <h3>Clarify the Opportunity</h3>
+          <p>Turn the fact base into a narrow, testable business thesis.</p>
+          <ul class="checklist">
+            <li><span class="ck"><i data-lucide="check"></i></span>Ideal customer and business problem</li>
+            <li><span class="ck"><i data-lucide="check"></i></span>Initial service line and defined exclusions</li>
+            <li><span class="ck"><i data-lucide="check"></i></span>Revenue model: project, recurring, or hybrid</li>
+            <li><span class="ck"><i data-lucide="check"></i></span>Build, partner, acquire, or blended delivery model</li>
+            <li><span class="ck"><i data-lucide="check"></i></span>Pilot criteria and measurable success targets</li>
+          </ul>
+          <div class="trap"><b>Common trap:</b> defining the offer too broadly and creating a sales promise the operation cannot reliably deliver.</div>
+        </div>
+      </div>
+      <h3 style="margin: 36px 0 12px;">The decision gate</h3>
+      <p style="color: var(--fsg-ink-2); max-width: 74ch;">Do not move forward until leadership can state, in one page, whom the new capability serves, what it sells first, why the company can win, what it will not do, who owns the result, and what evidence will justify further investment.</p>
+      <div class="callout success"><strong>Useful output:</strong> a concise business case and capability-gap assessment, not a long strategic plan that no one uses.</div>
+    </div>
+  </section>
+
+  <!-- ───────── 05 · ARCHITECT ───────── -->
+  <section id="architect" class="band-parchment">
+    <div class="container">
+      <div class="section-head">
+        <span class="fsg-eyebrow">05 · Architect</span>
+        <h2>Architect the minimum viable capability</h2>
+        <p class="lead">Before the first major proposal, design the smallest complete operating model that can sell, deliver, commission, support, and measure the new technology responsibly.</p>
+      </div>
+      <div class="grid-3">
+        <div class="card reveal"><div class="card-icon"><i data-lucide="user-check"></i></div><h4>Ownership</h4><p>Executive sponsor, capability leader, sales, estimating, PM, field, engineering, service, and P&amp;L accountability.</p></div>
+        <div class="card reveal rd-1"><div class="card-icon"><i data-lucide="package"></i></div><h4>Offer</h4><p>Standard scope, customer outcome, assumptions, exclusions, options, warranty, support, and recurring services.</p></div>
+        <div class="card reveal rd-2"><div class="card-icon"><i data-lucide="handshake"></i></div><h4>Vendor ecosystem</h4><p>Manufacturer, distribution, certifications, design support, escalation, replacement, and licensing.</p></div>
+        <div class="card reveal"><div class="card-icon"><i data-lucide="calculator"></i></div><h4>Estimating and design</h4><p>Discovery, surveys, drawings, BOM, labor, software, configuration, testing, contingency, and approvals.</p></div>
+        <div class="card reveal rd-1"><div class="card-icon"><i data-lucide="clipboard-list"></i></div><h4>Project delivery</h4><p>Handoff, submittals, procurement, staging, installation, commissioning, acceptance, training, and closeout.</p></div>
+        <div class="card reveal rd-2"><div class="card-icon"><i data-lucide="life-buoy"></i></div><h4>Lifecycle support</h4><p>Ticket ownership, remote triage, dispatch, warranty, renewals, documentation, upgrades, and SLAs.</p></div>
+      </div>
+
+      <h3 style="margin: 40px 0 16px;">Build in stages</h3>
+      <div class="grid-4">
+        <div class="card reveal"><span class="tag">Phase 1</span><h4>Partner-heavy</h4><p class="small">Use specialists to reduce risk while demand and internal aptitude are proven.</p></div>
+        <div class="card reveal rd-1"><span class="tag">Phase 2</span><h4>Core internal team</h4><p class="small">Internalize customer-facing, estimating, PM, and field leadership capabilities.</p></div>
+        <div class="card reveal rd-2"><span class="tag">Phase 3</span><h4>Technical depth</h4><p class="small">Add engineering, programming, commissioning, or support as volume justifies it.</p></div>
+        <div class="card reveal rd-3"><span class="tag">Phase 4</span><h4>Scale engine</h4><p class="small">Standardize offers, data, training, service, and market expansion.</p></div>
+      </div>
+
+      <div class="callout warning">
+        <strong>Do not overbuild payroll ahead of evidence.</strong> The initial model should use qualified partners where they reduce fixed cost and technical risk, while keeping customer ownership, solution standards, and accountability inside the company.
+      </div>
+    </div>
+  </section>
+
+  <!-- ───────── 06 · LAUNCH + EVALUATE ───────── -->
+  <section id="launch-evaluate">
+    <div class="container">
+      <div class="section-head">
+        <span class="fsg-eyebrow">06 · Launch + Evaluate</span>
+        <h2>Launch to learn, then decide</h2>
+      </div>
+      <div class="grid-2">
+        <div class="card stage-card reveal">
+          <span class="stage-letter" aria-hidden="true">L</span>
+          <span class="tag teal">Controlled execution</span>
+          <h3>Launch the Initiatives</h3>
+          <p>The first project is a business-model test, not just an installation.</p>
+          <ul class="checklist">
+            <li><span class="ck"><i data-lucide="check"></i></span>Choose a trusted customer and controlled scope</li>
+            <li><span class="ck"><i data-lucide="check"></i></span>Confirm design, margin, material, licenses, and site readiness</li>
+            <li><span class="ck"><i data-lucide="check"></i></span>Name technical escalation and customer communication owners</li>
+            <li><span class="ck"><i data-lucide="check"></i></span>Define commissioning and acceptance before mobilization</li>
+            <li><span class="ck"><i data-lucide="check"></i></span>Capture decisions, changes, labor, defects, and lessons in real time</li>
+          </ul>
+        </div>
+        <div class="card stage-card reveal rd-1">
+          <span class="stage-letter" aria-hidden="true">E</span>
+          <span class="tag teal">Evidence-based growth</span>
+          <h3>Evaluate and Improve</h3>
+          <p>Review the whole business outcome, not just whether the system turned on.</p>
+          <ul class="checklist">
+            <li><span class="ck"><i data-lucide="check"></i></span>Pipeline, win rate, project size, and gross margin</li>
+            <li><span class="ck"><i data-lucide="check"></i></span>Estimated versus actual labor and material</li>
+            <li><span class="ck"><i data-lucide="check"></i></span>Commissioning defects, rework, and schedule performance</li>
+            <li><span class="ck"><i data-lucide="check"></i></span>Customer acceptance, training, tickets, and support burden</li>
+            <li><span class="ck"><i data-lucide="check"></i></span>Role clarity, documentation, vendor response, and cash use</li>
+          </ul>
+        </div>
+      </div>
+
+      <h3 style="margin: 36px 0 16px;">Make one of three decisions</h3>
+      <div class="grid-3">
+        <div class="card reveal"><div class="card-icon"><i data-lucide="octagon-x"></i></div><h4>Stop</h4><p>The economics, strategic fit, or support burden do not justify continued investment.</p></div>
+        <div class="card reveal rd-1"><div class="card-icon"><i data-lucide="sliders-horizontal"></i></div><h4>Refine</h4><p>The opportunity remains attractive, but pricing, scope, staffing, vendor, or process must change.</p></div>
+        <div class="card reveal rd-2"><div class="card-icon"><i data-lucide="trending-up"></i></div><h4>Scale</h4><p>The pilot produced repeatable customer value, operational control, and acceptable financial performance.</p></div>
+      </div>
+
+      <div class="mini-cta reveal">
+        <div>
+          <h3>The pilot should answer questions, not create new ambiguity.</h3>
+          <p>FSG helps electrical contractors and TSPs structure the roadmap, operating model, pilot, and scorecard before expensive commitments are made.</p>
+        </div>
+        <a class="btn accent btn-lg" href="https://connect.fusionsg.com/strategy" target="_blank" rel="noopener"><i data-lucide="calendar"></i> Connect with David</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ───────── 07 · HIRING ───────── -->
+  <section id="hiring" class="band-parchment">
+    <div class="container">
+      <div class="section-head">
+        <span class="fsg-eyebrow">07 · People and Leadership</span>
+        <h2>Hire for a business, not just a trade</h2>
+        <p class="lead">The first leader or specialist for a new technology often becomes the unofficial architect of the entire business line. Technical competence matters, but early leaders must also build standards, communicate with customers, protect margin, and develop others.</p>
+      </div>
+      <div class="grid-2">
+        <div class="card reveal"><div class="role-when">First leadership need</div><h4>Capability Leader / Player-Coach</h4><p>Owns strategy, P&amp;L, vendors, key opportunities, operating cadence, standards, and team development.</p></div>
+        <div class="card reveal rd-1"><div class="role-when">Preconstruction need</div><h4>Estimator / System Designer</h4><p>Translates outcomes into architecture, drawings, BOM, labor, software, assumptions, exclusions, and risk-adjusted pricing.</p></div>
+        <div class="card reveal rd-2"><div class="role-when">Execution need</div><h4>Technology PM / Lead Technician</h4><p>Coordinates dependencies, procurement, installation, configuration, testing, documentation, customer decisions, and closeout.</p></div>
+        <div class="card reveal rd-3"><div class="role-when">Specialist or partner</div><h4>Engineer / Programmer / Support</h4><p>Provides advanced design, integrations, commissioning, troubleshooting, escalation, and lifecycle support as required.</p></div>
+      </div>
+
+      <div class="fit-grid">
+        <div class="fit-panel yes-panel reveal">
+          <h3><span class="badge y">✓</span> Look for</h3>
+          <div class="fit-list">
+            <div class="fit-item"><span class="ico">✓</span><span>Systems thinking beyond individual products</span></div>
+            <div class="fit-item"><span class="ico">✓</span><span>Documented examples of commissioning and troubleshooting</span></div>
+            <div class="fit-item"><span class="ico">✓</span><span>Commercial awareness and respect for margin</span></div>
+            <div class="fit-item"><span class="ico">✓</span><span>Clear customer and field communication</span></div>
+            <div class="fit-item"><span class="ico">✓</span><span>Comfort building repeatable standards</span></div>
+            <div class="fit-item"><span class="ico">✓</span><span>Willingness to teach and create bench strength</span></div>
+          </div>
+        </div>
+        <div class="fit-panel no-panel reveal rd-1">
+          <h3><span class="badge n">✗</span> Watch for</h3>
+          <div class="fit-list">
+            <div class="fit-item"><span class="ico">✗</span><span>A "lone hero" who keeps knowledge in their head</span></div>
+            <div class="fit-item"><span class="ico">✗</span><span>Experience limited to one manufacturer ecosystem</span></div>
+            <div class="fit-item"><span class="ico">✗</span><span>Strong installation skills but weak documentation</span></div>
+            <div class="fit-item"><span class="ico">✗</span><span>Little understanding of software, networks, or support</span></div>
+            <div class="fit-item"><span class="ico">✗</span><span>Resistance to estimating discipline or project controls</span></div>
+            <div class="fit-item"><span class="ico">✗</span><span>Big-title expectations before demand is proven</span></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="callout">
+        <strong>Interview for evidence.</strong> Ask candidates to walk through a project from discovery to acceptance, explain what failed, show how they documented it, and describe how they protected the customer and project economics.
+      </div>
+    </div>
+  </section>
+
+  <!-- ───────── 08 · EXECUTION ───────── -->
+  <section id="execution">
+    <div class="container">
+      <div class="section-head">
+        <span class="fsg-eyebrow">08 · Project Execution</span>
+        <h2>Traditional construction project management is not enough</h2>
+        <p class="lead">Integrated technology projects combine construction, networking, software, configuration, licensing, owner decisions, functional testing, integrations, and ongoing support. They require stage gates and tighter control of technical dependencies than installation work alone.</p>
+      </div>
+
+      <div class="table-wrap reveal">
+        <table class="comparison">
+          <thead><tr><th>Control point</th><th>Traditional construction emphasis</th><th>Additional technology-solutions requirement</th></tr></thead>
+          <tbody>
+            <tr><td>Design</td><td>Plans, specifications, code, equipment, load, and constructability.</td><td>Architecture, network, software, integrations, coverage, storage, credentials, licensing, and cybersecurity assumptions.</td></tr>
+            <tr><td>Estimating</td><td>Material, labor units, equipment, supervision, and schedule.</td><td>Engineering, programming, configuration, testing, training, documentation, subscriptions, and support burden.</td></tr>
+            <tr><td>Procurement</td><td>Availability, approved products, lead time, and substitutions.</td><td>Firmware compatibility, license activation, subscriptions, credentials, cloud tenancy, and manufacturer escalation.</td></tr>
+            <tr><td>Field execution</td><td>Installation quality, safety, production, inspection, and coordination.</td><td>Labeling, certification, IP addressing, device identity, staging, configuration control, and test evidence.</td></tr>
+            <tr><td>Completion</td><td>Punch list, inspection, as-builts, O&amp;M manuals, and turnover.</td><td>Commissioning, functional acceptance, backups, passwords, training, support handoff, warranty, and renewal ownership.</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h3 style="margin: 36px 0 16px;">Use stage gates</h3>
+      <div class="grid-4">
+        <div class="card reveal"><span class="tag">Gate 1</span><h4>Qualified</h4><p class="small">Customer problem, scope, stakeholders, site data, and decision process are understood.</p></div>
+        <div class="card reveal rd-1"><span class="tag">Gate 2</span><h4>Approved</h4><p class="small">Design, margin, assumptions, contract, material, licenses, and technical risk are approved.</p></div>
+        <div class="card reveal rd-2"><span class="tag">Gate 3</span><h4>Ready</h4><p class="small">Site, dependencies, equipment, configuration plan, escalation, and acceptance criteria are ready.</p></div>
+        <div class="card reveal rd-3"><span class="tag">Gate 4</span><h4>Accepted</h4><p class="small">Testing, training, documentation, customer signoff, support handoff, and billing are complete.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ───────── 09 · FIRST 90 DAYS ───────── -->
+  <section id="plan" class="band-parchment">
+    <div class="container">
+      <div class="section-head">
+        <span class="fsg-eyebrow">09 · Execution Roadmap</span>
+        <h2>The first 90 days</h2>
+        <p class="lead">The first quarter should validate the opportunity, build the minimum operating system, and prepare one controlled pilot. It should not attempt to create a fully mature business line overnight.</p>
+      </div>
+
+      <div class="timeline">
+        <div class="timeline-row reveal"><div class="timeline-date">Days 1&ndash;15</div><div class="timeline-body"><b>Survey.</b> Review customer demand, lost scope, current capabilities, leadership capacity, licenses, financial constraints, and service infrastructure.</div></div>
+        <div class="timeline-row reveal"><div class="timeline-date">Days 16&ndash;30</div><div class="timeline-body"><b>Clarify.</b> Select the initial customer, service line, delivery model, executive owner, investment range, success metrics, and pilot criteria.</div></div>
+        <div class="timeline-row reveal"><div class="timeline-date">Days 31&ndash;55</div><div class="timeline-body"><b>Architect.</b> Define roles, vendors, estimating, project gates, support ownership, hiring or partner gaps, and separate financial reporting.</div></div>
+        <div class="timeline-row reveal"><div class="timeline-date">Days 56&ndash;75</div><div class="timeline-body"><b>Prepare.</b> Train the core team, build qualification and proposal tools, select the pilot, confirm design and pricing, and establish escalation.</div></div>
+        <div class="timeline-row reveal"><div class="timeline-date">Days 76&ndash;90</div><div class="timeline-body"><b>Launch.</b> Contract or mobilize the pilot, manage customer communication and risk, capture lessons, and establish the first operating scorecard.</div></div>
+      </div>
+
+      <h3 style="margin: 36px 0 16px;">Track only the metrics that drive decisions</h3>
+      <div class="grid-4">
+        <div class="kpi reveal"><div class="metric">Demand</div><strong>Qualified Pipeline</strong><span>Real opportunities by customer, service line, value, and stage.</span></div>
+        <div class="kpi reveal rd-1"><div class="metric">Profit</div><strong>Gross Margin</strong><span>Separate project and service margin before corporate overhead.</span></div>
+        <div class="kpi reveal rd-2"><div class="metric">Execution</div><strong>Labor Variance</strong><span>Estimated versus actual labor by project and activity.</span></div>
+        <div class="kpi reveal rd-3"><div class="metric">Lifecycle</div><strong>Support Burden</strong><span>Tickets, escalations, truck rolls, warranty cost, and recurring revenue.</span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ───────── FINAL CTA ───────── -->
+  <section id="contact" class="cta-section">
+    <div class="container">
+      <div class="section-head">
+        <span class="fsg-eyebrow">Avoid Expensive False Starts</span>
+        <h2>The opportunity is significant. The launch must fit your business.</h2>
+        <p class="lead">The framework in this guide tells you what must be decided. The right answer depends on your customers, markets, leadership team, technical capabilities, financial model, and appetite for risk.</p>
+      </div>
+
+      <div class="failure-grid">
+        <div class="failure-card reveal"><strong>Common failure: too broad</strong><span>The provider adds technologies without selecting a focused customer, problem, and repeatable offer.</span></div>
+        <div class="failure-card reveal rd-1"><strong>Common failure: the lone expert</strong><span>One hire becomes sales, designer, estimator, PM, engineer, trainer, and support desk.</span></div>
+        <div class="failure-card reveal rd-2"><strong>Common failure: cable-only thinking</strong><span>Software, licenses, configuration, commissioning, training, and support are missed or underpriced.</span></div>
+        <div class="failure-card reveal rd-3"><strong>Common failure: scale before proof</strong><span>Sales volume grows faster than standards, technical depth, project controls, and service capacity.</span></div>
+      </div>
+
+      <div class="cta-box reveal">
+        <div>
+          <h3>Connect with David for a Technology Growth Strategy Session</h3>
+          <p>We will review your customer base, current capabilities, best next technology lane, major risks, and the most practical path from idea to a controlled launch or expansion.</p>
+          <a class="cta-url" href="https://connect.fusionsg.com/strategy" target="_blank" rel="noopener">connect.fusionsg.com/strategy</a>
+        </div>
+        <a class="btn accent btn-lg" href="https://connect.fusionsg.com/strategy" target="_blank" rel="noopener"><i data-lucide="calendar"></i> Schedule an appointment</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ───────── FOOTER ───────── -->
+  <footer>
+    <div class="container">
+      <div class="foot">
+        <div class="foot-brand"><img src="assets/fsg-logo-white.png" alt=""><span class="wm">Fusion Solutions Group</span></div>
+        <div class="copy">&copy; <span id="year"></span> Fusion Solutions Group. All rights reserved.</div>
+        <div class="miniLinks">
+          <a href="/">Home</a>
+          <a href="#top">↑ Top</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    // Lucide
+    lucide.createIcons();
+
+    // Year
+    document.getElementById('year').textContent = new Date().getFullYear();
+
+    // Scroll reveal
+    const obs = new IntersectionObserver(entries => {
+      entries.forEach(e => {
+        if (e.isIntersecting) { e.target.classList.add('visible'); obs.unobserve(e.target); }
+      });
+    }, { threshold: 0.08, rootMargin: '0px 0px -40px 0px' });
+    document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
+
+    // Readiness assessment
+    (function(){
+      const assessment = document.getElementById('readiness-assessment');
+      if (!assessment) return;
+
+      const questions = Array.from(assessment.querySelectorAll('.readiness-item'));
+      const scoreNumber = document.getElementById('score-number');
+      const scoreTitle = document.getElementById('score-title');
+      const scoreMessage = document.getElementById('score-message');
+      const progressBar = document.getElementById('score-progress-bar');
+      const resetButton = document.getElementById('reset-score');
+
+      function updateScore(){
+        const selected = questions.map(item => item.querySelector('input:checked'));
+        const answered = selected.filter(Boolean).length;
+        const yesCount = selected.filter(input => input && input.value === 'yes').length;
+
+        questions.forEach((item, index) => item.classList.toggle('answered', Boolean(selected[index])));
+        scoreNumber.textContent = yesCount;
+        progressBar.style.width = ((answered / questions.length) * 100) + '%';
+
+        if (answered < questions.length){
+          const remaining = questions.length - answered;
+          scoreTitle.textContent = answered === 0 ? 'Complete the assessment' : 'Keep going: ' + remaining + ' question' + (remaining === 1 ? '' : 's') + ' left';
+          scoreMessage.textContent = 'Your current score is ' + yesCount + '. Complete every question for a readiness recommendation.';
+          return;
+        }
+
+        if (yesCount >= 6){
+          scoreTitle.textContent = 'You may be ready to plan a controlled launch';
+          scoreMessage.textContent = 'Your fundamentals appear strong enough to begin structured planning, capability-gap analysis, and pilot selection.';
+        } else if (yesCount >= 3){
+          scoreTitle.textContent = 'The opportunity may be real, but gaps remain';
+          scoreMessage.textContent = 'Address the highest-risk gaps before hiring aggressively, committing to vendors, or pursuing a large first project.';
+        } else {
+          scoreTitle.textContent = 'Validate the business case before investing';
+          scoreMessage.textContent = 'Start with customer demand, leadership ownership, and a focused technology-line thesis before making a major investment.';
+        }
+      }
+
+      assessment.addEventListener('change', updateScore);
+      resetButton.addEventListener('click', function(){
+        assessment.querySelectorAll('input[type="radio"]').forEach(input => { input.checked = false; });
+        updateScore();
+        questions[0].scrollIntoView({ behavior: 'smooth', block: 'center' });
+      });
+      updateScore();
+    })();
+  </script>
+</body>
+</html>
