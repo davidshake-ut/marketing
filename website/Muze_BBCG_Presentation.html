@@ -1,0 +1,518 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SKBM Connect — Muze Apartments — Managed Wi-Fi Presentation</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#0B1F33; --ink-soft:#16314A; --paper:#EDF1F6; --surface:#FFFFFF;
+    --line:#E2E9F0; --muted:#5C6E7E; --muted-soft:#8A99A8;
+    --brand:#15568F; --brand-deep:#0E4376; --brand-soft:#E7F0F9;
+    --gold:#B7791F; --gold-soft:#FDEBD3; --gold-deep:#7A5210;
+    --teal:#2E9E8F; --teal-soft:#E4F3F0;
+    --copper:#2E86DE; --copper-soft:#DEEAF6;
+    --font:'Montserrat',system-ui,sans-serif;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:var(--font);background:var(--paper);color:var(--ink);-webkit-font-smoothing:antialiased}
+
+  /* ---------- controls ---------- */
+  .toolbar{position:fixed;top:14px;right:16px;z-index:50;display:flex;gap:8px}
+  .toolbar button{font-family:var(--font);font-weight:700;font-size:12px;letter-spacing:.04em;border:0;border-radius:999px;padding:9px 16px;cursor:pointer;box-shadow:0 4px 14px rgba(11,31,51,.18)}
+  .btn-edit{background:#fff;color:var(--brand-deep)}
+  .btn-edit.on{background:var(--gold);color:#fff}
+  .btn-pdf{background:var(--brand);color:#fff}
+  .nav{position:fixed;bottom:18px;left:50%;transform:translateX(-50%);z-index:50;display:flex;align-items:center;gap:12px;background:#fff;border-radius:999px;padding:8px 14px;box-shadow:0 6px 20px rgba(11,31,51,.18)}
+  .nav button{border:0;background:var(--brand-soft);color:var(--brand-deep);width:34px;height:34px;border-radius:999px;font-size:16px;font-weight:800;cursor:pointer}
+  .dots{display:flex;gap:7px}
+  .dot{width:9px;height:9px;border-radius:99px;background:#C9D6E2;cursor:pointer}
+  .dot.on{background:var(--gold);transform:scale(1.25)}
+  .editing-banner{position:fixed;top:14px;left:16px;z-index:50;background:var(--gold);color:#fff;font-size:11px;font-weight:700;letter-spacing:.08em;padding:8px 14px;border-radius:999px;display:none}
+  body.editing .editing-banner{display:block}
+  body.editing [contenteditable]{outline:1.5px dashed rgba(183,121,31,.6);outline-offset:3px;border-radius:4px}
+
+  /* ---------- slides ---------- */
+  .deck{max-width:1240px;margin:0 auto;padding:26px 18px 110px;display:grid;gap:30px}
+  .slide{background:var(--surface);border-radius:20px;box-shadow:0 2px 6px rgba(11,31,51,.06),0 18px 44px rgba(11,31,51,.09);
+    aspect-ratio:16/9;min-height:560px;padding:clamp(26px,3.6vw,54px);position:relative;overflow:hidden;display:flex;flex-direction:column;scroll-margin-top:20px}
+  .slide.dark{background:linear-gradient(155deg,var(--ink) 0%,var(--brand-deep) 90%);color:#fff}
+  .kick{font-size:12px;font-weight:800;letter-spacing:.2em;text-transform:uppercase;color:var(--gold)}
+  .slide.dark .kick{color:#F0C36D}
+  h1{font-weight:700;font-size:clamp(30px,4vw,52px);letter-spacing:-.02em;line-height:1.06;margin-top:12px}
+  h2{font-weight:700;font-size:clamp(24px,2.8vw,36px);letter-spacing:-.018em;line-height:1.1;margin-top:10px}
+  .sub{margin-top:12px;font-size:clamp(13px,1.25vw,16px);color:var(--muted);max-width:72ch}
+  .slide.dark .sub{color:#C5D8EA}
+  .grow{flex:1;display:flex;flex-direction:column;justify-content:center}
+  .cols{display:grid;grid-template-columns:1.15fr .85fr;gap:clamp(18px,2.5vw,40px);align-items:start;margin-top:18px}
+  .cols3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:16px;margin-top:20px}
+  @media(max-width:860px){.slide{aspect-ratio:auto}.cols,.cols3{grid-template-columns:1fr}}
+  .tile{background:var(--paper);border:1px solid var(--line);border-radius:14px;padding:16px 18px}
+  .slide.dark .tile{background:rgba(255,255,255,.06);border-color:rgba(255,255,255,.14)}
+  .tile h4{font-size:13.5px;font-weight:800}
+  .tile p{margin-top:6px;font-size:12.5px;color:var(--muted);line-height:1.5}
+  .slide.dark .tile p{color:#B9CEE0}
+  ul.pts{list-style:none;display:grid;gap:10px;margin-top:14px}
+  ul.pts li{position:relative;padding-left:24px;font-size:clamp(12.5px,1.15vw,15px);line-height:1.5}
+  ul.pts li::before{content:"";position:absolute;left:0;top:7px;width:10px;height:10px;border-radius:3px;background:var(--gold)}
+  .slide.dark ul.pts li::before{background:#F0C36D}
+  .chips{display:flex;gap:9px;flex-wrap:wrap;margin-top:18px}
+  .chip{font-size:11px;font-weight:700;letter-spacing:.06em;padding:6px 12px;border-radius:999px;background:var(--brand-soft);color:var(--brand-deep)}
+  .slide.dark .chip{background:rgba(255,255,255,.09);color:#DCEAF6;border:1px solid rgba(255,255,255,.16)}
+  .stat{text-align:left}
+  .stat .n{font-weight:800;font-size:clamp(26px,2.6vw,38px);letter-spacing:-.02em;color:var(--brand-deep)}
+  .slide.dark .stat .n{color:#F0C36D}
+  .stat .l{font-size:11.5px;color:var(--muted);margin-top:3px;font-weight:600}
+  .slide.dark .stat .l{color:#A9C6E2}
+  .plabel{font-size:12px;font-weight:800;margin-top:10px;color:var(--ink-soft)}
+  .plabel+.price{margin-top:6px}
+  .price{display:inline-flex;align-items:baseline;gap:10px;background:var(--gold-soft);border:1px solid #EAD9B0;border-radius:12px;padding:9px 15px;margin-top:14px}
+  .price .p{font-weight:800;font-size:clamp(19px,1.9vw,26px);color:var(--gold-deep);letter-spacing:-.01em}
+  .price .pl{font-size:11px;font-weight:700;color:#996A15;letter-spacing:.06em}
+  .badge{display:inline-block;font-size:10.5px;font-weight:800;letter-spacing:.12em;text-transform:uppercase;padding:5px 12px;border-radius:999px;margin-left:12px;vertical-align:middle}
+  .badge.spec{background:var(--brand-soft);color:var(--brand-deep)}
+  .badge.up{background:var(--teal-soft);color:#1E6E63}
+  .badge.rec{background:var(--gold);color:#fff}
+  .spectrum{display:flex;gap:5px;height:7px;max-width:300px;margin-top:16px}
+  .spectrum span{flex:1;border-radius:99px;opacity:.3}
+  .spectrum .b1{background:#7FA8CC}.spectrum .b2{background:#2E86DE}.spectrum .b3{background:#B7791F}
+  .spectrum span.on{opacity:1}
+  .foot{position:absolute;left:clamp(26px,3.6vw,54px);right:clamp(26px,3.6vw,54px);bottom:16px;display:flex;justify-content:space-between;font-size:10px;font-weight:600;letter-spacing:.06em;color:var(--muted-soft)}
+  .slide.dark .foot{color:#7E9CBB}
+  .fine{font-size:10.5px;color:var(--muted-soft);margin-top:14px}
+  .compare{width:100%;border-collapse:collapse;margin-top:16px;font-size:12px}
+  .compare th{background:var(--ink);color:#fff;font-weight:700;font-size:10.5px;letter-spacing:.06em;text-transform:uppercase;padding:8px 10px;text-align:left}
+  .compare td{padding:8px 10px;border-bottom:1px solid var(--line)}
+  .compare tr.hl td{background:var(--gold-soft);font-weight:700}
+
+  /* ---------- print / PDF ---------- */
+  /* matrix slide */
+  #s6b{aspect-ratio:auto;min-height:560px}
+  .mx-wrap{overflow-x:auto;margin-top:16px}
+  table.mx{width:100%;border-collapse:collapse;font-size:11.5px}
+  .mx th{background:var(--ink);color:#fff;font-weight:700;font-size:10.5px;letter-spacing:.05em;padding:7px 9px;text-align:center;position:relative}
+  .mx th:first-child{text-align:left}
+  .mx td{padding:5px 9px;border-bottom:1px solid var(--line);text-align:center;position:relative}
+  .mx td:first-child{text-align:left;font-weight:700;color:var(--ink-soft);white-space:nowrap}
+  .mx tbody tr:nth-child(even) td{background:#F7FAFD}
+  .mx .hlcol{background:var(--gold-soft)!important;font-weight:700}
+  .mx th.hlcol{background:var(--gold)!important;color:#fff}
+  .mx tr.money td{font-weight:700}
+  .mx tr.money td:first-child{color:var(--gold-deep)}
+  .recs{display:grid;grid-template-columns:1fr 1fr;gap:10px 22px;margin-top:16px}
+  .rec-line{font-size:12px;line-height:1.45}
+  .rec-line b{color:var(--brand-deep)}
+  .mx-toolbar{display:none;gap:8px;margin-top:12px}
+  body.editing .mx-toolbar{display:flex}
+  .mx-toolbar button{font-family:var(--font);font-weight:700;font-size:11px;border:0;border-radius:8px;padding:7px 12px;cursor:pointer;background:var(--gold);color:#fff}
+  .mx-ctl{display:none;position:absolute;gap:2px;z-index:5}
+  body.editing .mx-ctl{display:inline-flex}
+  .mx th .mx-ctl{top:-1px;right:1px}
+  .mx td .mx-ctl{left:1px;top:50%;transform:translateY(-50%)}
+  .mx-ctl button{border:0;background:rgba(11,31,51,.75);color:#fff;font-size:9px;width:15px;height:15px;border-radius:4px;cursor:pointer;line-height:1;padding:0}
+  .mx td .mx-ctl button{background:rgba(183,121,31,.85)}
+
+  @media print{
+    .mx-ctl,.mx-toolbar{display:none!important}
+    @page{size:11in 8.5in;margin:0}
+    body{background:#fff}
+    .toolbar,.nav,.editing-banner{display:none!important}
+    .deck{max-width:none;padding:0;gap:0;display:block}
+    .slide{border-radius:0;box-shadow:none;width:11in;height:8.5in;aspect-ratio:auto;min-height:0;page-break-after:always;padding:0.55in 0.7in}
+    .slide:last-child{page-break-after:auto}
+    .slide.dark{-webkit-print-color-adjust:exact;print-color-adjust:exact}
+    *{-webkit-print-color-adjust:exact;print-color-adjust:exact}
+  }
+</style>
+</head>
+<body>
+<div class="editing-banner">EDIT MODE ON — CLICK ANY TEXT TO CHANGE IT</div>
+<div class="toolbar">
+  <button class="btn-edit" id="editBtn" onclick="toggleEdit()">✎ Edit</button>
+  <button class="btn-pdf" onclick="window.print()">⬇ Download PDF</button>
+</div>
+
+<div class="deck" id="deck">
+
+<!-- ============ SLIDE 1 ============ -->
+<section class="slide dark" id="s1">
+  <div class="grow" contenteditable="false">
+    <div class="kick">Muze Apartments · Chapel Hill, NC · Prepared for Jonathan Rivera, BBCG</div>
+    <h1>SKBM Connect - resident connected in seconds.<br>Every owner outcome, delivered.</h1>
+    <p class="sub">A 400-home, 598-bedroom community by ZOM Living, opening 2027. The resident experience: scan a code at move-in, connect every device in under a minute, and never think about Wi-Fi again. Bedrooms, courtyards, the pool, the dog park. One network. One provider. One call.</p>
+    <div class="cols3">
+      <div class="tile stat"><div class="n">400 Units<br>Up to 459 APs</div><div class="l">Wi-Fi access points, designed from predictive heat maps, not guesswork</div></div>
+      <div class="tile stat"><div class="n">$75 Amenity Fee =<br>$360K per Year</div><div class="l">Potential annual NOI from the bulk technology amenity</div></div>
+      <div class="tile stat"><div class="n">100%</div><div class="l">Of the BBCG scope of work priced, mapped, and answered row by row</div></div>
+    </div>
+    <div class="chips">
+      <span class="chip">BUILT TO YOUR SOW</span>
+      <span class="chip">1GBs PERFORMANCE WITH REDUNDANT DUAL-CARRIER INTERNET</span>
+      <span class="chip">24/7 RESIDENT SUPPORT, DAY ONE</span>
+    </div>
+    <div class="spectrum"><span class="b1 on"></span><span class="b2 on"></span><span class="b3 on"></span></div>
+  </div>
+  <div class="foot"><span>SKBM CONNECT · MANAGED PROPERTY WI-FI</span><span>CONFIDENTIAL · SLIDE 1 OF 9</span></div>
+</section>
+
+<!-- ============ SLIDE 2 ============ -->
+<section class="slide" id="s2">
+  <div class="grow" contenteditable="false">
+    <div class="kick">Why SKBM</div>
+    <h2>Builders first. Network engineers now. One team.</h2>
+    <div class="cols">
+      <div>
+        <ul class="pts">
+          <li><b>We are actual general contractors.</b> We speak schedule, rough-in, and change order. We coordinate with your EC and GC natively because we have been them. Trench dates and drywall sequences are not surprises to us. They are our home field.</li>
+          <li><b>Network design and engineering capability we have never had before.</b> Predictive RF modeling per floor plan. Full PON optical engineering with loss budgets. UPS runtime analysis per closet. Interactive engineering drawings your team can click through.</li>
+          <li><b>A managed services operation behind the build.</b> 24/7 resident helpdesk in our name, proactive NOC monitoring, next-business-day hardware replacement contracts, and on-site spares from day one of move-ins.</li>
+        </ul>
+      </div>
+      <div>
+        <div class="tile"><h4>What that looked like on this project</h4>
+          <p>Before pricing a dollar, we reconciled your unit matrix (384 + 16 = 400), flagged the rack and receptacle conflicts in the workbook, asked the nine RFI questions that mattered, and rebuilt our design around your answers: fiber-forward, redundancy priced in, density on your bid matrix.</p></div>
+        <div class="tile" style="margin-top:12px"><h4>What BBCG wins</h4>
+          <p>A provider you never have to chase. Complete submittals, engineering-grade documentation, one accountable partner from trench to helpdesk, and an owner-facing NOI story that helps you sell the next one.</p></div>
+      </div>
+    </div>
+  </div>
+  <div class="foot"><span>SKBM CONNECT · MANAGED PROPERTY WI-FI</span><span>CONFIDENTIAL · SLIDE 2 OF 9</span></div>
+</section>
+
+<!-- ============ SLIDE 3 ============ -->
+<section class="slide" id="s3">
+  <div class="grow" contenteditable="false">
+    <div class="kick">Option 1 · Baseline</div>
+    <h2>Ruckus Wi-Fi 6 + Ruckus One <span class="badge spec">As specified in your SOW</span></h2>
+    <p class="sub">Exactly the platform your scope names: R650 in every unit, T350 outdoors, ICX switching, five years of licensing. Ruckus One drives the resident experience and the network control plane. A MikroTik gateway handles routing at the edge, carrier-grade capability at a sensible price.</p>
+    <div class="cols">
+      <div>
+        <ul class="pts">
+          <li><b>Resident onboarding in under a minute.</b> Personal network per unit, one password for every device, working the moment they get keys. Move-in day becomes a leasing win, not a support ticket.</li>
+          <li><b>Higher NOI from day one.</b> The bulk technology amenity turns the network into a recurring income line the owner keeps, capitalized straight into asset value.</li>
+          <li><b>Everything rides one backbone.</b> Staff Wi-Fi, access control, cameras, and IoT share the network at zero marginal cost, fully segmented and secure.</li>
+          <li><b>Managed for the life of the asset.</b> 24/7 support, proactive monitoring, licensing funded, lifecycle planned. The owner's staff never touches a switch.</li>
+        </ul>
+      </div>
+      <div>
+        <div class="plabel">Structured Cable:</div>
+        <div class="price"><span class="p">$456K</span><span class="pl">400 IN-UNIT CAT6 AND FIBER DROPS</span></div>
+        <div class="plabel">Managed Wi-Fi 6:</div>
+        <div class="price"><span class="p">$733K</span><span class="pl">TURNKEY · $30.50 / DOOR OVER 60 MONTHS</span></div>
+        <div class="plabel">Monthly Recurring:</div>
+        <div class="price"><span class="p">$15.2K / MO</span><span class="pl">WI-FI SERVICE $12.2K + DUAL INTERNET CIRCUITS $3.0K EST</span></div>
+        <div class="tile" style="margin-top:14px"><h4>Included</h4><p>429 APs (one per unit + amenity + outdoor), full structured cabling with fiber path to every panel, UPS-backed telecom rooms, redundant dual-carrier internet architecture, 5-year licensing, certification testing and as-builts.</p></div>
+      </div>
+    </div>
+  </div>
+  <div class="foot"><span>SKBM CONNECT · MANAGED PROPERTY WI-FI</span><span>CONFIDENTIAL · SLIDE 3 OF 9</span></div>
+</section>
+
+<!-- ============ SLIDE 4 ============ -->
+<section class="slide" id="s4">
+  <div class="grow" contenteditable="false">
+    <div class="kick">Option 2 · Coverage upgrade</div>
+    <h2>Wall-to-wall coverage in every large home <span class="badge up">Add alternate</span></h2>
+    <p class="sub">Our predictive modeling shows the big floor plans deserve better than one AP. This alternate adds a second access point to all 22 three-bedroom units and all 16 townhomes, with switch capacity and cabling resized to match, and it is broken out by unit type on your bid matrix, exactly as you asked.</p>
+    <div class="cols">
+      <div>
+        <ul class="pts">
+          <li><b>+38 access points</b> placed by heat map in the units where square footage and walls eat signal.</li>
+          <li><b>Every bedroom, full strength.</b> The three-bedroom renter paying the highest rent gets the best network in the building, not the weakest corner of it.</li>
+          <li><b>Fewer support calls, better reviews.</b> Coverage complaints are the number one Wi-Fi ticket in multifamily. This deletes them where they start.</li>
+          <li><b>A leasing line that closes.</b> "Two access points in every townhome" is a sentence your tours can say out loud.</li>
+        </ul>
+      </div>
+      <div>
+        <div class="plabel">Structured Cable:</div>
+        <div class="price"><span class="p">$456K</span><span class="pl">459 IN-UNIT AND AMENITY APS</span></div>
+        <div class="plabel">Managed Wi-Fi 6:</div>
+        <div class="price"><span class="p">$791K</span><span class="pl">TURNKEY · $33 / DOOR OVER 60 MONTHS</span></div>
+        <div class="plabel">Monthly Recurring:</div>
+        <div class="price"><span class="p">$16.2K / MO</span><span class="pl">WI-FI SERVICE $13.2K + DUAL INTERNET CIRCUITS $3.0K EST</span></div>
+        <div class="tile" style="margin-top:14px"><h4>What changes</h4><p>22 three-bedrooms and 16 townhomes move to two APs each. Additional in-unit cabling and switch ports carried inside the alternate. Heat maps for both configurations accompany the proposal so the difference is visible, not theoretical.</p></div>
+      </div>
+    </div>
+  </div>
+  <div class="foot"><span>SKBM CONNECT · MANAGED PROPERTY WI-FI</span><span>CONFIDENTIAL · SLIDE 4 OF 9</span></div>
+</section>
+
+<!-- ============ SLIDE 5 ============ -->
+<section class="slide" id="s5">
+  <div class="grow" contenteditable="false">
+    <div class="kick">Option 3 · Performance upgrade</div>
+    <h2>Wi-Fi 7 + rXg by RG Nets <span class="badge up">Recommended upgrade path</span></h2>
+    <p class="sub">Muze opens in 2027 and competes into the 2040s. Wi-Fi 7 more than doubles Wi-Fi 6 throughput, adds a clean third band at 6 GHz, and brings wider channels with far less congestion, which matters most in dense AP placements like this one.</p>
+    <div class="cols">
+      <div>
+        <ul class="pts">
+          <li><b>More than 2x the speed</b> with tri-band radios and multi-gig switching, so the wired side never caps the wireless side.</li>
+          <li><b>More channels, less congestion.</b> The 6 GHz band is reserved for new devices only. No legacy laptops. No interference from 2018.</li>
+          <li><b>rXg elevates the resident experience.</b> Carrier-class onboarding portal, per-device personal networks, self-service upgrades, speed tiers the owner can monetize, and PMS integration for automatic move-in and move-out.</li>
+          <li><b>Wi-Fi 8 ready.</b> We will evaluate Wi-Fi 8 hardware when it arrives later in 2026. Either way, this cabling plant and this gateway carry it without rework.</li>
+        </ul>
+      </div>
+      <div>
+        <div class="plabel">Structured Cable:</div>
+        <div class="price"><span class="p">$456K</span><span class="pl">459 IN-UNIT AND AMENITY APS</span></div>
+        <div class="plabel">Managed Wi-Fi 7:</div>
+        <div class="price"><span class="p">$977K</span><span class="pl">TURNKEY · $39.50 / DOOR OVER 60 MONTHS</span></div>
+        <div class="plabel">Monthly Recurring:</div>
+        <div class="price"><span class="p">$18.8K / MO</span><span class="pl">WI-FI SERVICE $15.8K + DUAL INTERNET CIRCUITS $3.0K EST</span></div>
+        <div class="tile" style="margin-top:14px"><h4>The delta that matters</h4><p>About $675 per door, one time, over the baseline. Across a ten-year hold that is under $6 per unit per month to run the newest Wi-Fi standard for the life of the asset.</p></div>
+      </div>
+    </div>
+  </div>
+  <div class="foot"><span>SKBM CONNECT · MANAGED PROPERTY WI-FI</span><span>CONFIDENTIAL · SLIDE 5 OF 9</span></div>
+</section>
+
+<!-- ============ SLIDE 6 ============ -->
+<section class="slide" id="s6">
+  <div class="grow" contenteditable="false">
+    <div class="kick">Option 4 · The full fiber build</div>
+    <h2>XGS-PON: fiber to every home <span class="badge up">Faster, future-proof, and all managed by Cambium's One Network</span></h2>
+    <p class="sub">Ten gigabits, symmetric, to every unit over a single strand of glass. The telecom closets go passive: no switches, no UPS fleet, nothing to age out. And in every media panel, a 2.5G PoE switch delivers a wired port at the living room TV, powers the ceiling AP, and leaves spare ports for whatever comes next.</p>
+    <div class="cols">
+      <div>
+        <ul class="pts">
+          <li><b>Higher speed than any copper option.</b> 10G symmetric per unit, with a premium-tier lever built into the splitter design.</li>
+          <li><b>Future-proofed in glass.</b> The next speed upgrade is a transceiver swap at the headend, not a re-cable of 400 homes.</li>
+          <li><b>Less to power, less to fail, less to refresh.</b> Passive closets eliminate 18 UPS units and the year-eight switch refresh entirely.</li>
+          <li><b>Less expensive than the Wi-Fi 7 copper build,</b> with the wired TV port included in every single unit.</li>
+        </ul>
+        <p class="fine">Infrastructure billed at construction; Managed Wi-Fi 7 delivered as a service at $26 per door per month over 60 months. Comparison figures from the engineered BOMs at like scope.</p>
+      </div>
+      <div>
+        <div class="plabel">FTTU Infrastructure:</div>
+        <div class="price"><span class="p">$410K</span><span class="pl">XGS-GPON</span></div>
+        <div class="plabel">Managed Wi-Fi 7:</div>
+        <div class="price"><span class="p">$625K</span><span class="pl">TURNKEY · $26 / DOOR OVER 60 MONTHS</span></div>
+        <div class="plabel">Monthly Recurring:</div>
+        <div class="price"><span class="p">$13.4K / MO</span><span class="pl">WI-FI SERVICE $10.4K + DUAL INTERNET CIRCUITS $3.0K EST</span></div>
+      </div>
+    </div>
+  </div>
+  <div class="foot"><span>SKBM CONNECT · MANAGED PROPERTY WI-FI</span><span>CONFIDENTIAL · SLIDE 6 OF 9</span></div>
+</section>
+
+
+<!-- ============ SLIDE 7: SUMMARY MATRIX ============ -->
+<section class="slide" id="s6b">
+  <div class="grow" contenteditable="false">
+    <div class="kick">The whole board at a glance</div>
+    <h2>Every option, side by side</h2>
+    <div class="mx-wrap">
+    <table class="mx" id="mx">
+      <thead>
+        <tr>
+          <th></th>
+          <th>SOW Baseline</th>
+          <th>Extended Wi-Fi 6</th>
+          <th>Wi-Fi 7</th>
+          <th>FTTU + Wi-Fi 7</th>
+          <th>Notes</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td>Architecture</td><td>Active Ethernet</td><td>Active Ethernet</td><td>Active Ethernet</td><td>XGS-PON</td><td></td></tr>
+        <tr><td>Residential APs</td><td>400</td><td>438</td><td>438</td><td>438</td><td></td></tr>
+        <tr><td>In-unit Standard</td><td>Wi-Fi 6</td><td>Wi-Fi 6</td><td>Wi-Fi 7</td><td>Wi-Fi 7</td><td></td></tr>
+        <tr><td>Fiber to Units</td><td>Dark / Future</td><td>Dark / Future</td><td>Dark / Future</td><td>Active</td><td></td></tr>
+        <tr><td>Max Infrastructure</td><td>1G AP edge</td><td>1G</td><td>Multi-Gig</td><td>10G PON</td><td></td></tr>
+        <tr><td>Property Roaming</td><td>Yes</td><td>Yes</td><td>Yes</td><td>Yes</td><td></td></tr>
+        <tr><td>Private Resident LAN</td><td>Yes</td><td>Yes</td><td>Yes</td><td>Yes</td><td></td></tr>
+        <tr><td>Dual Internet</td><td>2 x 5G</td><td>2 x 5G</td><td>2 x 5G</td><td>2 x 5G</td><td></td></tr>
+        <tr class="money"><td>Initial CAPEX</td><td>$456K</td><td>$456K</td><td>$456K</td><td>$410K</td><td>Structured cabling at construction</td></tr>
+        <tr class="money"><td>$ / Unit CAPEX</td><td>$1,140</td><td>$1,140</td><td>$1,140</td><td>$1,025</td><td>400 units</td></tr>
+        <tr class="money"><td>Monthly MRC</td><td>$15.2K</td><td>$16.2K</td><td>$18.8K</td><td>$13.4K</td><td>Wi-Fi service + dual circuits est</td></tr>
+        <tr class="money"><td>Managed Wi-Fi NRC $/Door/Month</td><td>$30.50</td><td>$33.00</td><td>$39.50</td><td>$26.00</td><td>60-month service term</td></tr>
+      </tbody>
+    </table>
+    </div>
+    <div class="mx-toolbar" contenteditable="false">
+      <button onclick="mxAddRow()">+ Add row</button>
+      <button onclick="mxAddCol()">+ Add column</button>
+      <span style="font-size:11px;color:var(--muted);align-self:center">Use the small buttons on rows and headers to move or delete. Click any cell to edit.</span>
+    </div>
+    <div class="recs">
+      <div class="rec-line"><b>SOW Baseline —</b> Lowest-risk response, exactly aligned with the requested architecture.</div>
+      <div class="rec-line"><b>Best Coverage —</b> Extended Wi-Fi 6 adds APs for better coverage in the larger units.</div>
+      <div class="rec-line"><b>Future Technology —</b> Wi-Fi 7 is today's technology versus 2019's.</div>
+      <div class="rec-line"><b>Future Infrastructure —</b> XGS-PON / FTTU: active fiber to every home, passive closets, decades of headroom.</div>
+    </div>
+    <p class="fine">Monthly MRC = managed Wi-Fi service + $3.0K/mo estimated dual redundant internet circuits (final per carrier quotes). Taxes and freight quoted separately; both apply equally to all options.</p>
+  </div>
+  <div class="foot"><span>SKBM CONNECT · MANAGED PROPERTY WI-FI</span><span>CONFIDENTIAL · SLIDE 7 OF 9</span></div>
+</section>
+
+<!-- ============ SLIDE 8 ============ -->
+<section class="slide dark" id="s7">
+  <div class="grow" contenteditable="false">
+    <div class="kick">Our recommendation</div>
+    <h1 style="font-size:clamp(26px,3.4vw,44px)">Build Muze on glass. <span class="badge rec">XGS-PON</span></h1>
+    <p class="sub">It is the best resident experience, the strongest owner outcome, and the network this property will still be proud of in 2040. Faster today. Cheaper to own. Ready for everything after.</p>
+    <div class="cols3">
+      <div class="tile"><h4>Experience</h4><p>10G symmetric to every home, Wi-Fi in every bedroom, a wired port at every TV, onboarding in under a minute, and 24/7 support that answers in SKBM's name.</p></div>
+      <div class="tile"><h4>Outcomes &amp; ROI</h4><p>At a $75 bulk fee: roughly $204,000 of new annual NOI and $3.7M of capitalized asset value at a 5.5% cap rate, with the lowest lifecycle cost of any option on the table.</p></div>
+      <div class="tile"><h4>Proof before move-in</h4><p>We will build a full working residential floor in our lab during construction: real ONTs, real APs, real media panels. BBCG and ZOM evaluate, demo, and train on the actual system months before the first resident arrives.</p></div>
+    </div>
+    <div class="chips" style="margin-top:22px">
+      <span class="chip">NEXT: WORKING SESSION TO CONFIRM OPTION + LOCK RF DESIGN</span>
+      <span class="chip">BID MATRIX + HEAT MAPS DELIVERED WITH PROPOSAL</span>
+      <span class="chip">SKBMSMART.COM · BILL@SKBMSMART.COM</span>
+    </div>
+  </div>
+  <div class="foot"><span>SKBM CONNECT · MANAGED PROPERTY WI-FI</span><span>CONFIDENTIAL · SLIDE 8 OF 9</span></div>
+</section>
+
+<!-- ============ SLIDE 9: OWNER NOI SELL SHEET ============ -->
+<section class="slide dark" id="s9">
+  <div class="grow" contenteditable="false">
+    <div class="kick">For the owner and operator</div>
+    <h1 style="font-size:clamp(26px,3.4vw,44px)">The network that pays for the building.</h1>
+    <p class="sub">Recommended XGS-PON basis, 400 homes, $75 bulk technology fee. Conservative: excludes retention lift, lease-up velocity, and premium speed tiers.</p>
+    <div class="cols" style="margin-top:20px">
+      <div>
+        <div class="tile"><h4>The monthly math</h4>
+          <p>Resident technology fee: $75 × 400 homes = <b>$30,000 / month</b><br>
+          Less Managed Wi-Fi 7 service: $26 × 400 = <b>−$10,400</b><br>
+          Less redundant internet circuits (est): <b>−$3,000</b><br>
+          <b>New net operating income: $16,600 / month · $199,200 / year · $498 per unit per year</b></p></div>
+        <div class="tile" style="margin-top:12px"><h4>Against the capital</h4>
+          <p>Owner construction capital is only the <b>$410K fiber infrastructure</b>. At $199K of annual NOI, that is a <b>2.1-year payback</b> and roughly <b>8.8x value creation</b> on invested capital at a 5.5% cap rate. The service model moves the electronics off the construction budget entirely.</p></div>
+      </div>
+      <div>
+        <table class="compare" style="font-size:13px">
+          <tr><th>Cap rate</th><th>Asset value created</th></tr>
+          <tr><td>5.00%</td><td>$3.98M</td></tr>
+          <tr class="hl"><td>5.50%</td><td>$3.62M</td></tr>
+          <tr><td>6.00%</td><td>$3.32M</td></tr>
+        </table>
+        <div class="tile" style="margin-top:12px"><h4>Not counted, all upside</h4>
+          <p>Faster lease-up with day-one connectivity, retention lift from an amenity residents keep, staff and IoT backbone at zero marginal cost, and a premium-tier bandwidth lever built into the splitter design.</p></div>
+      </div>
+    </div>
+  </div>
+  <div class="foot"><span>SKBM CONNECT · MANAGED PROPERTY WI-FI</span><span>CONFIDENTIAL · SLIDE 9 OF 9</span></div>
+</section>
+
+</div>
+
+<div class="nav">
+  <button onclick="go(-1)" aria-label="Previous slide">‹</button>
+  <div class="dots" id="dots"></div>
+  <button onclick="go(1)" aria-label="Next slide">›</button>
+</div>
+
+<script>
+const slides=[...document.querySelectorAll('.slide')];
+const dots=document.getElementById('dots');
+slides.forEach((s,i)=>{const d=document.createElement('div');d.className='dot'+(i===0?' on':'');d.onclick=()=>jump(i);dots.appendChild(d);});
+let cur=0;
+function setDot(){[...dots.children].forEach((d,i)=>d.classList.toggle('on',i===cur));}
+function jump(i){cur=Math.max(0,Math.min(slides.length-1,i));slides[cur].scrollIntoView({behavior:'smooth'});setDot();}
+function go(d){jump(cur+d);}
+document.addEventListener('keydown',e=>{
+  if(document.body.classList.contains('editing'))return;
+  if(e.key==='ArrowRight'||e.key==='PageDown')go(1);
+  if(e.key==='ArrowLeft'||e.key==='PageUp')go(-1);
+});
+const io=new IntersectionObserver(en=>{en.forEach(x=>{if(x.isIntersecting){cur=slides.indexOf(x.target);setDot();}});},{threshold:0.55});
+slides.forEach(s=>io.observe(s));
+let editSnapshot=null;
+function serializeDeck(){
+  const clone=document.documentElement.cloneNode(true);
+  clone.querySelectorAll('.slide .grow').forEach(g=>g.setAttribute('contenteditable','false'));
+  const b=clone.querySelector('body'); if(b) b.classList.remove('editing');
+  const eb=clone.querySelector('#editBtn'); if(eb) eb.classList.remove('on');
+  const dd=clone.querySelector('#dots'); if(dd) dd.innerHTML='';
+  return '<!DOCTYPE html>\n'+clone.outerHTML;
+}
+function downloadDeck(){
+  const blob=new Blob([serializeDeck()],{type:'text/html'});
+  const a=document.createElement('a');
+  a.href=URL.createObjectURL(blob);
+  a.download='Muze_BBCG_Presentation.html';
+  document.body.appendChild(a); a.click();
+  setTimeout(()=>{URL.revokeObjectURL(a.href);a.remove();},500);
+}
+function toggleEdit(){
+  const on=!document.body.classList.contains('editing');
+  if(on){ editSnapshot=document.getElementById('deck').innerHTML; }
+  document.body.classList.toggle('editing',on);
+  document.getElementById('editBtn').classList.toggle('on',on);
+  document.querySelectorAll('.slide .grow').forEach(g=>g.setAttribute('contenteditable',on?'true':'false'));
+  if(!on && editSnapshot!==null && document.getElementById('deck').innerHTML!==editSnapshot){
+    downloadDeck();
+    editSnapshot=null;
+  }
+}
+
+/* ===== matrix editor: operates on the DOM so saved files keep changes ===== */
+function mxTable(){return document.getElementById('mx');}
+function mxRows(){return [...mxTable().tBodies[0].rows];}
+function mxHead(){return mxTable().tHead.rows[0];}
+function mxEnsureControls(){
+  const t=mxTable(); if(!t)return;
+  [...mxHead().cells].forEach((th,i)=>{
+    if(i===0)return;
+    if(!th.querySelector('.mx-ctl')){
+      const s=document.createElement('span'); s.className='mx-ctl'; s.setAttribute('contenteditable','false');
+      s.innerHTML='<button title="Move left" onclick="mxMoveCol(this,-1)">&#8249;</button><button title="Move right" onclick="mxMoveCol(this,1)">&#8250;</button><button title="Delete column" onclick="mxDelCol(this)">&#10005;</button>';
+      th.appendChild(s);
+    }
+  });
+  mxRows().forEach(tr=>{
+    const td=tr.cells[0];
+    if(!td.querySelector('.mx-ctl')){
+      const s=document.createElement('span'); s.className='mx-ctl'; s.setAttribute('contenteditable','false');
+      s.innerHTML='<button title="Move up" onclick="mxMoveRow(this,-1)">&#8593;</button><button title="Move down" onclick="mxMoveRow(this,1)">&#8595;</button><button title="Delete row" onclick="mxDelRow(this)">&#10005;</button>';
+      td.appendChild(s);
+    }
+  });
+}
+function mxColIndex(el){const th=el.closest('th,td');return [...th.parentElement.children].indexOf(th);}
+function mxMoveRow(btn,d){
+  const tr=btn.closest('tr'), body=tr.parentElement;
+  const sib=d<0?tr.previousElementSibling:tr.nextElementSibling;
+  if(!sib)return;
+  d<0?body.insertBefore(tr,sib):body.insertBefore(sib,tr);
+}
+function mxDelRow(btn){ if(confirm('Delete this row?')) btn.closest('tr').remove(); }
+function mxMoveCol(btn,d){
+  const i=mxColIndex(btn), j=i+d;
+  const rows=[mxHead(),...mxRows()];
+  if(j<1||j>=rows[0].cells.length)return;
+  rows.forEach(r=>{
+    const a=r.cells[i], b=r.cells[j];
+    if(a&&b){ (d>0)? r.insertBefore(b,a) : r.insertBefore(a,b); }
+  });
+}
+function mxDelCol(btn){
+  if(!confirm('Delete this column?'))return;
+  const i=mxColIndex(btn);
+  [mxHead(),...mxRows()].forEach(r=>r.cells[i]&&r.cells[i].remove());
+}
+function mxAddRow(){
+  const n=mxHead().cells.length;
+  const tr=document.createElement('tr');
+  for(let i=0;i<n;i++){const td=document.createElement('td');td.textContent=i===0?'New attribute':'\u2014';tr.appendChild(td);}
+  mxTable().tBodies[0].appendChild(tr); mxEnsureControls();
+}
+function mxAddCol(){
+  const rows=[mxHead(),...mxRows()];
+  rows.forEach((r,k)=>{
+    const c=document.createElement(k===0?'th':'td');
+    c.textContent=k===0?'New option':'\u2014';
+    const last=r.cells[r.cells.length-1];
+    r.insertBefore(c,last);
+  });
+  mxEnsureControls();
+}
+mxEnsureControls();
+</script>
+</body>
+</html>
