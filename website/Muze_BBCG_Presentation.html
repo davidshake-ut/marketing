@@ -210,10 +210,21 @@
     body{background:#fff}
     .toolbar,.nav,.editing-banner{display:none!important}
     .deck{max-width:none;padding:0;gap:0;display:block}
-    .slide{border-radius:0;box-shadow:none;width:11in;height:8.5in;aspect-ratio:auto;min-height:0;page-break-after:always;padding:0.55in 0.7in}
+    .slide{border-radius:0;box-shadow:none;width:11in;height:8.5in;aspect-ratio:auto;min-height:0;page-break-after:always;page-break-inside:avoid;break-inside:avoid;overflow:hidden;padding:0.55in 0.7in}
     .slide:last-child{page-break-after:auto}
+    html,body{margin:0!important;padding:0!important}
     .slide.dark{-webkit-print-color-adjust:exact;print-color-adjust:exact}
     *{-webkit-print-color-adjust:exact;print-color-adjust:exact}
+    /* PDF-only fix: slides 2 & 3 (#s3, #s5) leave a gap under the bottom-pinned
+       box because .grow centers content in a fixed-height print page instead of
+       stretching it. Top-align this content in print only, and reserve clear
+       space above the absolutely-positioned footer so the bottom box can never
+       overlap the footer bar. Screen view and all other slides untouched. */
+    /* Reverted: a fixed margin-based push caused the bottom box to overlap the
+       footer in real-browser rendering (font metrics differ from test tooling).
+       Centering is the safe choice: leftover space splits evenly above and below
+       content, so overlap can't happen short of content exceeding the full page.
+       This also now matches every other slide's print behavior. */
   }
 </style>
 </head>
@@ -291,7 +302,7 @@
 <section class="slide" id="s5">
   <div class="grow" contenteditable="false">
     <div class="kick">Option 2 · Performance upgrade</div>
-    <h2>Wi-Fi 7 + rXg by RG Nets <span class="badge up">Recommended upgrade path</span></h2>
+    <h2>Wi-Fi 7 by Ruckus and RG Nets <span class="badge up">Recommended upgrade path</span></h2>
     <p class="sub">Muze opens in 2027 and competes into the 2040s. Wi-Fi 7 more than doubles Wi-Fi 6 throughput, adds a clean third band at 6 GHz, and brings wider channels with far less congestion, which matters most in dense AP placements like this one.</p>
     <div class="cols">
       <div>
@@ -301,7 +312,7 @@
           <li><b>rXg elevates the resident experience.</b> Carrier-class onboarding portal, per-device personal networks, self-service upgrades, speed tiers the owner can monetize, and PMS integration for automatic move-in and move-out.</li>
           <li><b>Wi-Fi 8 ready.</b> We will evaluate Wi-Fi 8 hardware when it arrives later in 2026. Either way, this cabling plant and this gateway carry it without rework.</li>
         </ul>
-        <div class="tile" style="margin-top:16px"><h4>The delta that matters</h4><p>About $675 per door, one time, over the baseline. Across a ten-year hold that is under $6 per unit per month to run the newest Wi-Fi standard for the life of the asset.</p></div>
+        <div class="tile" style="margin-top:16px"><h4>Faster and more robust, from day one</h4><p>This option starts with a faster, more robust network from day one, with additional coverage in every 3BR and townhome unit already included.</p></div>
       </div>
       <div>
         <div class="plabel">Structured Cable:</div>
@@ -310,7 +321,7 @@
         <div class="price"><span class="p">$953K</span><span class="pl">CAPEX-EQUIVALENT, ILLUSTRATIVE ·<br>$39.71 / DOOR / MO</span></div>
         <div class="plabel">Monthly Recurring:</div>
         <div class="price"><span class="p">$23.2K</span><span class="pl">FINANCED OPEX: WI-FI SERVICE $19.5K + DUAL 5G REDUNDANT INTERNET $3,695</span></div>
-        <div class="tile" style="background:#ECF8F0;border-color:#C6E7D3"><h4>Value Engineered Option <span style="font-weight:500">to include Cambium Managed Wi-Fi instead of Ruckus Managed Wi-Fi:</span></h4><p><span style="color:var(--gold-deep);font-weight:800">Value Added Savings = Over $326K</span></p></div>
+        <div class="tile" style="background:#ECF8F0;border-color:#C6E7D3"><h4>Value Engineered Option <span style="font-weight:500">to include Cambium Managed Wi-Fi 7 controlled by Cambium ONE Network:</span></h4><p><span style="color:var(--gold-deep);font-weight:800">Value Added Savings = Over $326K</span></p></div>
         
       </div>
     </div>
@@ -338,9 +349,9 @@
         <div class="plabel">FTTU Infrastructure:</div>
         <div class="price infra"><span class="p">$331K</span><span class="pl">XGS-GPON</span></div>
         <div class="plabel">Managed Wi-Fi 7:</div>
-        <div class="price"><span class="p">$787K</span><span class="pl">CAPEX-EQUIVALENT, ILLUSTRATIVE ·<br>$32.79 / DOOR / MO</span></div>
+        <div class="price"><span class="p">$820K</span><span class="pl">CAPEX-EQUIVALENT, ILLUSTRATIVE ·<br>$34.17 / DOOR / MO</span></div>
         <div class="plabel">Monthly Recurring:</div>
-        <div class="price"><span class="p">$19.8K</span><span class="pl">FINANCED OPEX: WI-FI SERVICE $16.1K + DUAL 5G REDUNDANT INTERNET $3,695</span></div>
+        <div class="price"><span class="p">$20.5K</span><span class="pl">FINANCED OPEX: WI-FI SERVICE $16.8K + DUAL 5G REDUNDANT INTERNET $3,695</span></div>
       </div>
     </div>
   </div>
@@ -372,9 +383,9 @@
         <tr><td>Max Infrastructure</td><td>1G AP edge</td><td>Multi-Gig</td><td>10G PON</td><td></td></tr>
         <tr class="money"><td>Infrastructure (CAPEX)</td><td>$437K</td><td>$443K</td><td>$331K</td><td>Structured cabling, billed at construction</td></tr>
         <tr class="money"><td>$ / Unit Infrastructure</td><td>$1,093</td><td>$1,108</td><td>$828</td><td>400 units</td></tr>
-        <tr class="money"><td>Managed Wi-Fi (Investment)</td><td>$765K</td><td>$953K</td><td>$787K</td><td>Equipment + labor, CAPEX-equivalent basis</td></tr>
-        <tr class="money"><td>Managed Wi-Fi $ / Door / Month</td><td>$31.88</td><td>$39.71</td><td>$32.79</td><td>Illustrative, straight-line over 60mo, no cost of capital</td></tr>
-        <tr class="money"><td>Monthly Recurring (Financed Opex)</td><td>$19.4K</td><td>$23.2K</td><td>$19.8K</td><td>0.02048 rate factor on Wi-Fi + $3,695 dual 5G circuits</td></tr>
+        <tr class="money"><td>Managed Wi-Fi (Investment)</td><td>$765K</td><td>$953K</td><td>$820K</td><td>Equipment + labor, CAPEX-equivalent basis</td></tr>
+        <tr class="money"><td>Managed Wi-Fi $ / Door / Month</td><td>$31.88</td><td>$39.71</td><td>$34.17</td><td>Illustrative, straight-line over 60mo, no cost of capital</td></tr>
+        <tr class="money"><td>Monthly Recurring (Financed Opex)</td><td>$19.4K</td><td>$23.2K</td><td>$20.5K</td><td>0.02048 rate factor on Wi-Fi + $3,695 dual 5G circuits</td></tr>
       </tbody>
     </table>
     </div>
